@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séance 18 - Nettoyer, scorer et préparer la BDD | DENEM Academy</title>
+<link rel="icon" href="logo-denem.jpeg">
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:82px}body{margin:0;background:#fbfcff;color:#17142f;font-family:Inter,Arial,sans-serif;line-height:1.6;overflow-x:hidden}::selection{background:#35d2c6;color:#101026}a{color:inherit}.progress{position:fixed;top:0;left:0;height:5px;width:0;z-index:30;background:linear-gradient(90deg,#17142f,#35d2c6,#ff8a3d)}.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:2px solid #17142f}.topbar-inner{max-width:1180px;margin:auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;align-items:center;gap:10px;font-weight:950;letter-spacing:.04em;text-transform:uppercase;font-size:13px}.brand img{width:34px;height:34px;border:2px solid #17142f;border-radius:8px;object-fit:cover}.pill{border:2px solid #17142f;border-radius:999px;background:#35d2c6;box-shadow:3px 3px 0 #17142f;padding:7px 12px;font:900 12px/1 ui-monospace,Menlo,monospace;text-transform:uppercase}.hero{position:relative;overflow:hidden;background:#fff;border-bottom:2px solid #17142f}.hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(53,210,198,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(23,20,47,.08) 1px,transparent 1px);background-size:34px 34px}.hero-wrap{position:relative;max-width:1180px;margin:auto;padding:76px 18px 56px;display:grid;grid-template-columns:1.02fr .98fr;gap:34px;align-items:center}.eyebrow,.kicker{display:inline-flex;width:max-content;max-width:100%;border:2px solid #17142f;background:#35d2c6;color:#17142f;border-radius:5px;box-shadow:4px 4px 0 #17142f;padding:7px 11px;font:900 12px/1.2 ui-monospace,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em}h1{font-size:clamp(42px,7vw,90px);line-height:.92;margin:20px 0 18px;letter-spacing:0}h1 span{color:#35d2c6;text-shadow:3px 3px 0 #17142f}.hero p{font-size:18px;color:#4b5068;max-width:760px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.stat{border:2px solid #17142f;background:#fff;border-radius:8px;box-shadow:5px 5px 0 #17142f;padding:14px}.stat b{display:block;font-size:28px;line-height:1;color:#17142f}.stat small{font-weight:850;color:#62677c}.media{margin:0;border:2px solid #17142f;border-radius:8px;overflow:hidden;background:#fff;box-shadow:7px 7px 0 #17142f}.media img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:#eef2f7}.media figcaption{border-top:2px solid #17142f;background:#fff;padding:10px 12px;font-size:13px;font-weight:800;color:#4b5068}.full-media img{aspect-ratio:16/8}.toc{max-width:1180px;margin:auto;padding:28px 18px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.toc a{text-decoration:none;border:2px solid #17142f;background:#fff;border-radius:8px;box-shadow:4px 4px 0 #17142f;padding:14px;min-height:110px}.toc span{font:900 12px/1 monospace;color:#ff6b35}.toc b{display:block;margin-top:9px;font-size:18px;line-height:1.15}.section{border-top:2px solid #17142f;scroll-margin-top:78px}.tone-1{background:#fff}.tone-2{background:#f1fbfa}.tone-3{background:#f7f4ff}.tone-4{background:#fff7ed}.tone-5{background:#f8fafc}.tone-6{background:#eff6ff}.wrap{max-width:1180px;margin:auto;padding:58px 18px;display:grid;gap:28px}.layout-image .wrap,.layout-check .wrap,.layout-alert .wrap,.layout-before .wrap,.layout-diagnostic .wrap,.layout-flow .wrap,.layout-method .wrap,.layout-timeline .wrap{grid-template-columns:.9fr 1.1fr;align-items:center}.layout-full .wrap,.layout-table .wrap,.layout-cards .wrap,.layout-quote .wrap,.layout-prompt .wrap,.layout-final .wrap{grid-template-columns:1fr}.section-stack{display:grid;gap:24px}.section-copy h2{font-size:clamp(31px,4vw,54px);line-height:1;margin:14px 0 16px;letter-spacing:0}.section-copy p{color:#4b5068;font-size:18px;margin:0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}.cards article,.alert-box,.diagnostic div,.final-card,.timeline article{border:2px solid #17142f;background:#fff;border-radius:8px;box-shadow:5px 5px 0 #17142f;padding:18px}.cards article strong,.diagnostic b{display:block;font-size:18px;margin-bottom:8px}.cards article p,.diagnostic p,.alert-box p,.final-card li,.timeline p{margin:0;color:#4b5068}.checklist,.method{list-style:none;margin:0;padding:0;display:grid;gap:12px}.checklist li,.method li{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;border:2px solid #17142f;background:#fff;border-radius:8px;box-shadow:4px 4px 0 #17142f;padding:12px}.checklist span,.method span{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#17142f;color:#fff;font:900 14px/1 monospace}.checklist p,.method p{margin:0;font-weight:800;color:#293046}.alert-box{background:#17142f;color:#fff}.alert-box b{color:#35d2c6;text-transform:uppercase;font:900 13px/1 monospace;letter-spacing:.08em}.alert-box p{color:#eef6f8;font-size:20px;margin-top:10px}.before-after{display:grid;grid-template-columns:1fr 1fr;gap:14px}.before-after div{border:2px solid #17142f;border-radius:8px;box-shadow:5px 5px 0 #17142f;padding:18px;background:#fff}.before-after div:last-child{background:#35d2c6}.before-after span{font:900 12px/1 monospace;text-transform:uppercase}.before-after p{font-size:18px;font-weight:850;margin:10px 0 0;color:#17142f}.table-wrap{overflow-x:auto;border:2px solid #17142f;border-radius:8px;box-shadow:5px 5px 0 #17142f;background:#fff}table{width:100%;border-collapse:collapse;min-width:700px}th,td{border-bottom:1px solid #d8dee9;padding:14px;text-align:left;vertical-align:top}th{background:#17142f;color:#fff;font:900 12px/1.25 monospace;text-transform:uppercase;letter-spacing:.06em}td{color:#4b5068;font-weight:700}blockquote{margin:0;border:2px solid #17142f;background:#35d2c6;border-radius:10px;box-shadow:7px 7px 0 #17142f;padding:34px;font-size:clamp(25px,4vw,46px);font-weight:950;line-height:1.05}.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.flow span{position:relative;border:2px solid #17142f;background:#fff;border-radius:999px;box-shadow:3px 3px 0 #17142f;padding:12px 16px;font:900 13px/1 monospace}.flow span:not(:last-child):after{content:"→";margin-left:10px;color:#ff6b35}.prompt-card{border:2px solid #17142f;border-radius:10px;overflow:hidden;box-shadow:7px 7px 0 #17142f;background:#111225;color:#f6fbff}.prompt-head{display:flex;justify-content:space-between;align-items:center;gap:14px;border-bottom:2px solid rgba(255,255,255,.2);padding:12px 14px;background:#17142f}.prompt-head span{font:900 12px/1 monospace;text-transform:uppercase;letter-spacing:.08em;color:#35d2c6}.copy-btn{border:2px solid #fff;background:#fff;color:#17142f;border-radius:6px;padding:7px 11px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 rgba(255,255,255,.25)}.prompt-card pre{margin:0;padding:20px;max-height:720px;overflow:auto;white-space:pre-wrap;word-break:break-word;font:650 13px/1.65 ui-monospace,Menlo,monospace}.diagnostic{display:grid;gap:12px}.diagnostic div:last-child{background:#35d2c6}.timeline{display:grid;gap:12px}.timeline article{display:grid;grid-template-columns:54px 1fr;align-items:center;gap:14px}.timeline span{display:grid;place-items:center;width:44px;height:44px;border-radius:6px;background:#17142f;color:#fff;font:900 16px/1 monospace}.final-card{background:#35d2c6;font-size:20px;font-weight:850}.final-card ul{margin:0;padding-left:22px}.footer{background:#17142f;color:#fff;padding:38px 18px;text-align:center}.footer a{color:#35d2c6;font-weight:900}@media(max-width:980px){.hero-wrap,.layout-image .wrap,.layout-check .wrap,.layout-alert .wrap,.layout-before .wrap,.layout-diagnostic .wrap,.layout-flow .wrap,.layout-method .wrap,.layout-timeline .wrap{grid-template-columns:1fr}.toc{grid-template-columns:repeat(2,1fr)}.stats,.before-after{grid-template-columns:1fr}}@media(max-width:620px){.topbar-inner{padding:10px 12px}.brand span{font-size:11px}.pill{font-size:10px;padding:6px 9px}.hero-wrap{padding:48px 14px 42px}.wrap{padding:44px 14px}.toc{grid-template-columns:1fr;padding:20px 14px}h1{font-size:clamp(38px,13vw,54px);line-height:1.04}h1 span{display:block;margin-top:4px;text-shadow:2px 2px 0 #17142f}.eyebrow,.kicker{font-size:11px;line-height:1.25;white-space:normal}.section-copy p,.hero p{font-size:16px;max-width:100%}.prompt-card pre{font-size:12px;padding:15px}.table-wrap{overflow:visible}table,thead,tbody,tr,th,td{display:block;width:100%;min-width:0}thead{display:none}tr{border-bottom:2px solid #17142f}td{border-bottom:0;padding:12px 14px}.media figcaption{font-size:12px}.full-media img,.media img{aspect-ratio:16/10}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<nav class="topbar"><div class="topbar-inner"><div class="brand"><img src="logo-denem.jpeg" alt="DENEM Academy"><span>DENEM Academy · Séance 18</span></div><span class="pill">CRM propre</span></div></nav>
+<header class="hero"><div class="hero-wrap"><div><p class="eyebrow">Acte 2 · Base de prospection</p><h1>Nettoyer, scorer et <span>préparer la BDD</span></h1><p>Je transforme la base enrichie avec Apify en CRM exploitable : déduplication, qualité, score final, segments d'outreach et dossier `PROSPECTION_READY` pour la séance 19.</p><div class="stats"><div class="stat"><b>80</b><small>sections guidées</small></div><div class="stat"><b>30</b><small>captures vidéo</small></div><div class="stat"><b>6</b><small>prompts copiables</small></div></div></div><figure class="media"><img src="img/session-18/01-intro-nettoyer-scorer-bdd.jpg" alt="Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD." loading="lazy"><figcaption>Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD.</figcaption></figure></div></header>
+<div class="toc"><a href="#section-01"><span>Acte 01</span><b>Pourquoi nettoyer</b></a><a href="#section-11"><span>Acte 02</span><b>Lancer Codex</b></a><a href="#section-16"><span>Acte 03</span><b>Prompt CRM</b></a><a href="#section-34"><span>Acte 04</span><b>Contrôler le classeur</b></a><a href="#section-45"><span>Acte 05</span><b>Ranger le projet</b></a><a href="#section-61"><span>Acte 06</span><b>Préparer la suite</b></a></div>
+<main><section id="section-01" class="section tone-1 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">01 · Vision</p><h2>01. Je passe d&#x27;une base enrichie à une base exploitable</h2><p>Je ne veux pas envoyer des messages tout de suite. Je veux une base propre, dédupliquée, scorée et prête pour la séance de prospection.</p></div><figure class="media"><img src="img/session-18/01-intro-nettoyer-scorer-bdd.jpg" alt="Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD." loading="lazy"><figcaption>Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD.</figcaption></figure></div></section>
+<section id="section-02" class="section tone-2 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">02 · Objectif</p><h2>02. La séance 18 est un sas qualité</h2><p>Les données collectées avant sont utiles, mais elles doivent devenir actionnables.</p></div><div class="cards"><article><strong>Nettoyer</strong><p>Corriger emails, téléphones, domaines et sources.</p></article><article><strong>Scorer</strong><p>Créer une priorité finale sur 100.</p></article><article><strong>Segmenter</strong><p>Préparer le bon message pour le bon type de restaurant.</p></article></div></div></section>
+<section id="section-03" class="section tone-3 layout-before"><div class="wrap"><div class="section-copy"><p class="kicker">03 · Avant / après</p><h2>03. Une base riche peut rester inutilisable</h2><p>Si je ne trie pas, j&#x27;envoie aux mauvais leads ou je mélange les canaux.</p></div><div class="before-after"><div><span>Avant</span><p>11 839 lignes enrichies, plusieurs onglets, doublons, contacts incomplets.</p></div><div><span>Après</span><p>CRM propre avec statuts qualité, classes finales et file d&#x27;attente d&#x27;outreach.</p></div></div></div></section>
+<section id="section-04" class="section tone-4 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">04 · Champs</p><h2>04. Les champs doivent servir l&#x27;outreach</h2><p>Un email, un téléphone ou un domaine ne vaut rien s&#x27;il n&#x27;est pas propre, sourcé et relié à une action.</p></div><figure class="media"><img src="img/session-18/02-champs-utilisables-outreach.jpg" alt="Les champs doivent devenir utilisables par un outil d&#x27;outreach." loading="lazy"><figcaption>Les champs doivent devenir utilisables par un outil d&#x27;outreach.</figcaption></figure></div></section>
+<section id="section-05" class="section tone-5 layout-flow"><div class="wrap"><div class="section-copy"><p class="kicker">05 · Pipeline</p><h2>05. Le pipeline de la séance</h2><p>Je transforme la base Apify en CRM final.</p></div><div class="flow"><span>Apify</span><span>normalisation</span><span>déduplication</span><span>qualité</span><span>score final</span><span>segments</span><span>CRM</span></div></div></section>
+<section id="section-06" class="section tone-6 layout-alert"><div class="wrap"><div class="section-copy"><p class="kicker">06 · Règle</p><h2>06. Aucun envoi dans cette séance</h2><p>La base est préparée pour envoyer plus tard, pas pour contacter maintenant.</p></div><aside class="alert-box"><b>Point de vigilance</b><p>Rien n&#x27;est approved par défaut. La prospection reste en brouillon ou en pending review.</p></aside></div></section>
+<section id="section-07" class="section tone-1 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">07 · Statuts</p><h2>07. Le CRM doit dire quoi faire</h2><p>Chaque ligne doit sortir avec un statut compréhensible.</p></div><div class="table-wrap"><table><thead><tr><th>Statut</th><th>Signification</th><th>Action</th></tr></thead><tbody><tr><td>CLEAN_READY</td><td>Contact exploitable et données cohérentes</td><td>Peut rejoindre la file d&#x27;outreach</td></tr><tr><td>READY_WITH_WARNING</td><td>Exploitable avec une réserve</td><td>Contacter doucement ou vérifier</td></tr><tr><td>NEEDS_MANUAL_REVIEW</td><td>Ambiguïté réelle</td><td>Relecture humaine</td></tr><tr><td>DO_NOT_CONTACT</td><td>Risque ou mauvais fit</td><td>Exclure</td></tr><tr><td>ENRICH_LATER</td><td>Données insuffisantes</td><td>Reprendre plus tard</td></tr></tbody></table></div></div></section>
+<section id="section-08" class="section tone-2 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">08 · Segments</p><h2>08. La prospection a besoin de segments</h2><p>Je ne veux pas une seule liste. Une brasserie, un traiteur et un restaurant gastronomique ne reçoivent pas le même message.</p></div><figure class="media"><img src="img/session-18/03-prospection-besoin-base-organisee.jpg" alt="La prospection automatisée demande des segments, pas une seule liste." loading="lazy"><figcaption>La prospection automatisée demande des segments, pas une seule liste.</figcaption></figure></div></section>
+<section id="section-09" class="section tone-3 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">09 · Classes</p><h2>09. Les classes finales imposent une priorité</h2><p>Le score final devient une décision simple.</p></div><div class="cards"><article><strong>A+</strong><p>Meilleurs leads, contact complet, angle clair.</p></article><article><strong>A</strong><p>Prêts email ou appel.</p></article><article><strong>B</strong><p>Exploitables, mais moins prioritaires.</p></article><article><strong>C</strong><p>À enrichir ou vérifier.</p></article><article><strong>D</strong><p>Ne pas contacter.</p></article></div></div></section>
+<section id="section-10" class="section tone-4 layout-quote"><div class="wrap"><div class="section-copy"><p class="kicker">10 · Principe</p><h2>10. Je cherche la qualité avant le volume</h2><p>La base propre réduit le coût de la prochaine séance.</p></div><blockquote>Un mauvais fichier rend une bonne automatisation dangereuse.</blockquote></div></section>
+<section id="section-11" class="section tone-5 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">11 · Codex</p><h2>11. Je lance Codex dans le projet</h2><p>Je sélectionne le dossier où la collecte massive a été réalisée, puis je colle le prompt CRM.</p></div><figure class="media"><img src="img/session-18/04-codex-prompt-crm.jpg" alt="Je lance Codex dans le dossier du projet." loading="lazy"><figcaption>Je lance Codex dans le dossier du projet.</figcaption></figure></div></section>
+<section id="section-12" class="section tone-6 layout-check"><div class="wrap"><div class="section-copy"><p class="kicker">12 · Avant prompt</p><h2>12. Je vérifie le contexte avant d&#x27;envoyer</h2><p>Le modèle doit lire le bon fichier source.</p></div><ul class="checklist"><li><span>01</span><p>Le dossier projet est bien sélectionné.</p></li><li><span>02</span><p>Le fichier Apify existe ou peut être retrouvé.</p></li><li><span>03</span><p>Je donne l&#x27;accès complet si je veux une exécution autonome.</p></li><li><span>04</span><p>Je garde les anciens fichiers intacts.</p></li></ul></div></section>
+<section id="section-13" class="section tone-1 layout-prompt"><div class="wrap"><div class="section-copy"><p class="kicker">13 · Prompt contrôle chemin</p><h2>13. Si le chemin ne répond pas, je fais chercher le vrai fichier</h2><p>Ce prompt sert à éviter de générer une base depuis le mauvais export.</p></div><div class="prompt-card"><div class="prompt-head"><span>Prompt à copier</span><button class="copy-btn" type="button">Copier</button></div><pre><code>Vérifie que tu travailles dans le bon dossier.
+Le fichier source attendu est :
+~/Desktop/mon-business/08-enrichissement-apify/leads-apify-enriched.xlsx
+
+Si le chemin ne répond pas tel quel, cherche le fichier dans le dossier projet réel.
+Ne modifie pas les anciens fichiers.
+Dis-moi quel fichier exact tu vas utiliser.</code></pre></div></div></section>
+<section id="section-14" class="section tone-2 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">14 · Bon fichier</p><h2>14. Codex retrouve le fichier réel</h2><p>Le chemin annoncé ne répond pas toujours tel quel. Je laisse Codex inspecter le dossier partagé et retrouver la bonne variante.</p></div><figure class="media"><img src="img/session-18/13-codex-trouve-fichier-source.jpg" alt="Codex retrouve le bon fichier source malgré un chemin différent." loading="lazy"><figcaption>Codex retrouve le bon fichier source malgré un chemin différent.</figcaption></figure></div></section>
+<section id="section-15" class="section tone-3 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">15 · Volume</p><h2>15. La base contient 11 839 lignes</h2><p>Je confirme le volume avant de traiter. C&#x27;est important pour comprendre le temps de calcul et les futures statistiques.</p></div><figure class="media"><img src="img/session-18/14-codex-base-volumineuse-11839.jpg" alt="La base contient 11 839 lignes à structurer." loading="lazy"><figcaption>La base contient 11 839 lignes à structurer.</figcaption></figure></div></section>
+<section id="section-16" class="section tone-4 layout-prompt"><div class="wrap"><div class="section-copy"><p class="kicker">16 · Prompt CRM</p><h2>16. Le prompt maître CRM</h2><p>Ce prompt crée la base CRM propre, les scores, les statuts, les onglets, les rapports et les contrôles.</p></div><div class="prompt-card"><div class="prompt-head"><span>Prompt à copier</span><button class="copy-btn" type="button">Copier</button></div><pre><code>Tu es un RevOps data engineer senior, spécialiste nettoyage de bases B2B, scoring commercial, CRM, conformité et préparation de campagnes de prospection.
+
+MISSION
+Tu dois reprendre le fichier enrichi avec Apify :
+@~/Desktop/mon-business/08-enrichissement-apify/leads-apify-enriched.xlsx
+
+Tu dois créer une base CRM propre, dédupliquée, scoreée et prête pour la prospection.
+Le but n&#x27;est pas d&#x27;envoyer des emails.
+Le but est de préparer une base solide pour la séance suivante.
+
+FICHIER DE SORTIE
+Crée :
+~/Desktop/mon-business/09-bdd-prospection/leads-clean-crm.xlsx
+~/Desktop/mon-business/09-bdd-prospection/leads-clean-crm.csv
+~/Desktop/mon-business/09-bdd-prospection/rapport-clean-crm.md
+
+Crée aussi :
+~/Desktop/mon-business/09-bdd-prospection/dedupe-map.csv
+~/Desktop/mon-business/09-bdd-prospection/quality-issues.csv
+~/Desktop/mon-business/09-bdd-prospection/outreach-segments.md
+
+ENTRÉE
+Lis toutes les colonnes existantes :
+- colonnes Serper
+- colonnes dg_
+- colonnes apify_
+- priority_score
+- priority_class
+- personalized_angle
+- suggested_offer
+- outreach_message
+
+CONTRAINTE
+Ne supprime aucune donnée utile.
+Si tu fusionnes des lignes, conserve toutes les sources.
+Ne modifie pas les fichiers précédents.
+Crée une nouvelle version propre.
+
+PHASE 0 — AUDIT INITIAL
+Analyse :
+- total lignes
+- total lead_id uniques
+- total SIRET
+- doublons probables
+- emails présents
+- téléphones présents
+- contacts complets
+- lignes à vérifier
+- lignes non contactables
+- distribution par segment, ville, statut data.gouv, statut Apify
+
+Écris le diagnostic dans rapport-clean-crm.md.
+
+PHASE 1 — NORMALISATION
+Normalise :
+- company_name
+- domain
+- website
+- email
+- phone
+- city
+- postal_code
+- dg_siren
+- dg_siret
+- apify links sociaux
+
+Emails :
+- lowercase
+- retire mailto:
+- supprime espaces
+- valide syntaxe simple
+- sépare plusieurs emails
+- choisis un primary_email
+- conserve all_emails
+- crée email_quality
+
+Téléphones :
+- retire espaces inutiles
+- conserve format lisible
+- distingue fixed/mobile si possible
+- choisis primary_phone
+- conserve all_phones
+- crée phone_quality
+
+Sites :
+- domain sans www
+- website en https si possible
+- retire paramètres tracking
+
+PHASE 2 — DÉDUPLICATION
+Déduplique avec cette priorité :
+1. dg_siret
+2. dg_siren + domain
+3. domain + city
+4. primary_email
+5. primary_phone
+6. company_name normalisé + city + address
+
+Quand tu fusionnes :
+- garde le meilleur priority_score
+- garde la meilleure donnée email
+- garde la meilleure donnée téléphone
+- garde tous les source_urls
+- garde toutes les source_pages
+- concatène les notes utiles
+- écris dedupe-map.csv
+
+Crée merge_reason :
+- same_siret
+- same_siren_domain
+- same_domain_city
+- same_email
+- same_phone
+- same_name_city_address
+
+PHASE 3 — VALIDATION QUALITÉ
+Crée quality_flags :
+- missing_email
+- missing_phone
+- weak_data_gouv_match
+- weak_apify_contact
+- conflicting_email
+- conflicting_phone
+- no_source_for_contact
+- closed_company
+- bad_fit
+- duplicate_merged
+- manual_review_required
+
+Crée quality_status :
+- CLEAN_READY
+- READY_WITH_WARNING
+- NEEDS_MANUAL_REVIEW
+- DO_NOT_CONTACT
+- ENRICH_LATER
+
+Règles :
+- LOW_CONFIDENCE, NOT_FOUND, entreprise fermée = DO_NOT_CONTACT ou NEEDS_MANUAL_REVIEW.
+- CONTACT_COMPLETE + HIGH_CONFIDENCE = CLEAN_READY.
+- EMAIL_ONLY + HIGH/MEDIUM = CLEAN_READY ou READY_WITH_WARNING.
+- PHONE_ONLY = READY_WITH_WARNING.
+- SOCIAL_ONLY = ENRICH_LATER ou manual review.
+
+PHASE 4 — SCORE FINAL
+Calcule final_lead_score sur 100 :
+
+legal_confidence_score /20
+- SIRET confirmé
+- entreprise active
+- code APE cohérent
+- dg_match_status fort
+
+contactability_score /25
+- email exploitable
+- téléphone exploitable
+- source officielle
+- pas de conflit
+
+fit_score_final /20
+- segment prioritaire
+- ville ou zone prioritaire
+- taille plausible
+- category cohérente
+
+pain_score_final /20
+- pain_signals
+- review_evidence
+- personalized_angle
+- suggested_offer cohérente
+
+timing_score_final /15
+- recrutement
+- privatisation
+- réservation
+- ouverture
+- actualité
+- signaux d&#x27;urgence
+
+Classes :
+- A+ : 85-100
+- A : 70-84
+- B : 55-69
+- C : 40-54
+- D : moins de 40
+
+PHASE 5 — SEGMENTATION OUTREACH
+Crée outreach_segment :
+- privatisation_groupes
+- agent_vocal_appels
+- avis_reputation
+- reservation_no_show
+- recrutement_staffing
+- menu_contenu
+- crm_fidelisation
+- general_ai_ops
+
+Crée offer_angle_final :
+- Assistant email privatisations/groupes
+- Audit appels ratés + agent vocal IA
+- Automatisation réponses avis Google
+- Relance clients et no-show
+- Assistant recrutement / candidatures
+- Automatisation menu du jour et réseaux
+- Mini CRM fidélisation
+
+Crée message_personalization_basis :
+- avis Google
+- site web
+- page contact
+- page privatisation
+- téléphone
+- outil réservation
+- data.gouv
+- autre
+
+PHASE 6 — ACTION RECOMMANDÉE
+Crée final_next_action :
+- Email personnalisé
+- Appel puis email
+- Email puis appel
+- LinkedIn / Instagram
+- Formulaire contact
+- Vérification manuelle
+- Enrichir plus tard
+- Ne pas contacter
+
+Règles :
+- A+/A + primary_email = Email personnalisé
+- A+/A + phone only = Appel puis email
+- B + email = Email doux / faible volume
+- C = Enrichir plus tard ou vérification
+- D = Ne pas contacter
+
+PHASE 7 — CLASSEUR EXCEL
+Crée leads-clean-crm.xlsx avec ces onglets :
+
+1. CRM_DASHBOARD
+KPIs :
+- lignes source
+- leads dédupliqués
+- CLEAN_READY
+- READY_WITH_WARNING
+- NEEDS_MANUAL_REVIEW
+- DO_NOT_CONTACT
+- A+ / A / B / C / D
+- email ready
+- phone ready
+- taux contactable
+- taux exclu
+
+Graphiques :
+- final_class
+- quality_status
+- canal recommandé
+- top segments
+- top villes
+
+2. MASTER_CRM
+Toutes les lignes finales dédupliquées.
+Colonnes minimum :
+lead_id_final, original_lead_ids, company_name, domain, website, dg_siren, dg_siret, dg_raison_sociale, dg_nom_commercial, primary_email, all_emails, email_quality, primary_phone, all_phones, phone_quality, city, address, segment, outreach_segment, offer_angle_final, final_lead_score, final_class, quality_status, final_next_action, recommended_contact_channel, personalized_angle, outreach_message, source_urls, apify_source_pages, notes.
+
+3. READY_FOR_EMAIL
+Seulement les lignes avec primary_email et quality_status CLEAN_READY ou READY_WITH_WARNING.
+
+4. READY_FOR_CALL
+Seulement les lignes avec primary_phone.
+
+5. READY_FOR_SOCIAL
+Seulement Instagram/LinkedIn/Facebook exploitables.
+
+6. MANUAL_REVIEW
+Toutes les lignes à vérifier.
+
+7. DO_NOT_CONTACT
+Entreprises fermées, mauvais fit, match faible, conflit critique.
+
+8. OUTREACH_SEGMENTS
+Vue par segment : volume, score moyen, canal, angle, offre.
+
+9. MESSAGE_ANGLES
+Une ligne par segment avec :
+segment, pain, offer_angle, proof_needed, email_hook, call_hook.
+
+10. DEDUPE_MAP
+Toutes les fusions.
+
+11. QUALITY_ISSUES
+Toutes les anomalies.
+
+12. OUTREACH_QUEUE
+File d&#x27;attente triée :
+rank, lead_id_final, company_name, final_class, channel, primary_email, primary_phone, message, status, owner, send_after, notes.
+
+13. SCORING_RULES
+Toutes les règles de score.
+
+MISE EN FORME
+- filtres
+- première ligne figée
+- couleurs par final_class et quality_status
+- dashboard lisible
+- colonnes larges
+- aucune donnée secrète
+- pas de formules cassées
+
+PHASE 8 — RAPPORT
+Crée rapport-clean-crm.md avec :
+- résumé de la base
+- nombre initial vs final
+- doublons fusionnés
+- taux email
+- taux téléphone
+- taux CLEAN_READY
+- top segments
+- top canaux
+- limites
+- recommandations pour la séance prospection automatisée
+
+CONFORMITÉ
+La base doit être utilisée pour une prospection B2B pertinente.
+Conserve les sources.
+Prépare une future colonne opt_out_status.
+Ne contacte pas les lignes DO_NOT_CONTACT.
+Ne crée pas de données inventées.
+
+CONTRÔLE FINAL
+Avant de finir :
+- vérifie que le XLSX s&#x27;ouvre
+- vérifie que MASTER_CRM est dédupliqué
+- vérifie que READY_FOR_EMAIL contient seulement des emails
+- vérifie que DO_NOT_CONTACT est exclu de OUTREACH_QUEUE
+- vérifie que final_lead_score est entre 0 et 100
+- vérifie que chaque ligne a final_next_action
+
+MESSAGE FINAL
+Réponds seulement :
+&quot;Base CRM nettoyée.
+Fichiers :
+- leads-clean-crm.xlsx
+- leads-clean-crm.csv
+- rapport-clean-crm.md
+
+Lignes source : X
+Leads finaux : Y
+Doublons fusionnés : Z
+CLEAN_READY : A
+READY_WITH_WARNING : B
+NEEDS_MANUAL_REVIEW : C
+DO_NOT_CONTACT : D
+Prêts email : E
+Prêts appel : F&quot;</code></pre></div></div></section>
+<section id="section-17" class="section tone-5 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">17 · Phases</p><h2>17. Le prompt suit un vrai plan</h2><p>Je ne demande pas juste de nettoyer. Je donne une procédure : audit, normalisation, déduplication, qualité, score, segmentation, action.</p></div><figure class="media"><img src="img/session-18/05-prompt-google-doc-phase-crm.jpg" alt="Le prompt CRM définit les phases de nettoyage et de scoring." loading="lazy"><figcaption>Le prompt CRM définit les phases de nettoyage et de scoring.</figcaption></figure></div></section>
+<section id="section-18" class="section tone-6 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">18 · Sorties</p><h2>18. Les fichiers de sortie sont imposés</h2><p>Codex doit produire des livrables, pas un résumé vague.</p></div><div class="table-wrap"><table><thead><tr><th>Fichier</th><th>Usage</th></tr></thead><tbody><tr><td>leads-clean-crm.xlsx</td><td>Classeur CRM principal</td></tr><tr><td>leads-clean-crm.csv</td><td>Version plate pour outil externe</td></tr><tr><td>rapport-clean-crm.md</td><td>Diagnostic et synthèse</td></tr><tr><td>dedupe-map.csv</td><td>Historique des fusions</td></tr><tr><td>quality-issues.csv</td><td>Anomalies à revoir</td></tr><tr><td>outreach-segments.md</td><td>Angles par segment</td></tr></tbody></table></div></div></section>
+<section id="section-19" class="section tone-1 layout-check"><div class="wrap"><div class="section-copy"><p class="kicker">19 · Contraintes</p><h2>19. Je protège les données utiles</h2><p>La fusion ne doit pas détruire les sources.</p></div><ul class="checklist"><li><span>01</span><p>Ne pas supprimer les anciens fichiers.</p></li><li><span>02</span><p>Conserver toutes les sources.</p></li><li><span>03</span><p>Conserver les meilleurs contacts.</p></li><li><span>04</span><p>Créer une nouvelle version propre.</p></li><li><span>05</span><p>Ne pas inventer de données.</p></li></ul></div></section>
+<section id="section-20" class="section tone-2 layout-method"><div class="wrap"><div class="section-copy"><p class="kicker">20 · Phase 0</p><h2>20. L&#x27;audit initial mesure la base</h2><p>Avant de modifier, je veux connaître le terrain.</p></div><ol class="method"><li><span>01</span><p>Nombre de lignes source.</p></li><li><span>02</span><p>Lead IDs uniques.</p></li><li><span>03</span><p>SIRET/SIREN présents.</p></li><li><span>04</span><p>Emails et téléphones présents.</p></li><li><span>05</span><p>Doublons probables.</p></li><li><span>06</span><p>Lignes à exclure ou vérifier.</p></li></ol></div></section>
+<section id="section-21" class="section tone-3 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">21 · Normalisation</p><h2>21. La normalisation rend les champs exploitables</h2><p>Chaque champ doit être lisible par la suite.</p></div><div class="table-wrap"><table><thead><tr><th>Champ</th><th>Nettoyage</th></tr></thead><tbody><tr><td>Email</td><td>lowercase, mailto supprimé, syntaxe vérifiée</td></tr><tr><td>Téléphone</td><td>format français lisible, mobile/fixe si possible</td></tr><tr><td>Domaine</td><td>sans www, sans tracking, cohérent avec website</td></tr><tr><td>Ville</td><td>normalisée et conservée</td></tr><tr><td>Sources</td><td>URLs et pages Apify gardées</td></tr></tbody></table></div></div></section>
+<section id="section-22" class="section tone-4 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">22 · Onglets</p><h2>22. Les onglets attendus sont définis</h2><p>Je veux un dashboard, un master CRM, des vues prêtes par canal, des anomalies et une file d&#x27;attente.</p></div><figure class="media"><img src="img/session-18/06-prompt-onglets-crm-dashboard.jpg" alt="Le prompt précise les onglets attendus dans le classeur." loading="lazy"><figcaption>Le prompt précise les onglets attendus dans le classeur.</figcaption></figure></div></section>
+<section id="section-23" class="section tone-5 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">23 · Déduplication</p><h2>23. Je déduplique avec plusieurs clés</h2><p>Un doublon peut apparaître par société, domaine, email ou téléphone.</p></div><div class="table-wrap"><table><thead><tr><th>Priorité</th><th>Clé</th></tr></thead><tbody><tr><td>1</td><td>dg_siret</td></tr><tr><td>2</td><td>dg_siren + domain</td></tr><tr><td>3</td><td>domain + city</td></tr><tr><td>4</td><td>primary_email</td></tr><tr><td>5</td><td>primary_phone</td></tr><tr><td>6</td><td>company_name + city + address</td></tr></tbody></table></div></div></section>
+<section id="section-24" class="section tone-6 layout-diagnostic"><div class="wrap"><div class="section-copy"><p class="kicker">24 · Erreur fréquente</p><h2>24. Supprimer une ligne peut supprimer une source</h2><p>La déduplication ne doit pas appauvrir la base.</p></div><div class="diagnostic"><div><b>Ce qui bloque</b><p>Garder une ligne au hasard parce que deux noms se ressemblent.</p></div><div><b>Comment je corrige</b><p>Fusionner les meilleurs champs et écrire la raison dans `dedupe-map.csv`.</p></div></div></div></section>
+<section id="section-25" class="section tone-1 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">25 · Quality flags</p><h2>25. Les flags expliquent le statut</h2><p>Je veux savoir pourquoi une ligne est prête ou bloquée.</p></div><div class="cards"><article><strong>missing_email</strong><p>Email absent.</p></article><article><strong>missing_phone</strong><p>Téléphone absent.</p></article><article><strong>weak_data_gouv_match</strong><p>Matching légal trop faible.</p></article><article><strong>conflicting_email</strong><p>Emails contradictoires.</p></article><article><strong>manual_review_required</strong><p>Décision humaine requise.</p></article></div></div></section>
+<section id="section-26" class="section tone-2 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">26 · Score final</p><h2>26. Le score final combine les séances précédentes</h2><p>Le CRM agrège la confiance légale, le contact et le potentiel commercial.</p></div><div class="table-wrap"><table><thead><tr><th>Bloc</th><th>Max</th><th>Signal</th></tr></thead><tbody><tr><td>legal_confidence_score</td><td>20</td><td>SIRET, entreprise active, APE, match</td></tr><tr><td>contactability_score</td><td>25</td><td>email, phone, source, conflit</td></tr><tr><td>fit_score_final</td><td>20</td><td>segment, ville, taille, catégorie</td></tr><tr><td>pain_score_final</td><td>20</td><td>avis, pain signals, angle</td></tr><tr><td>timing_score_final</td><td>15</td><td>actualité, recrutement, urgence</td></tr></tbody></table></div></div></section>
+<section id="section-27" class="section tone-3 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">27 · Contrôle</p><h2>27. Le prompt impose une vérification finale</h2><p>Je ne veux pas découvrir après coup que `READY_FOR_EMAIL` contient des lignes sans email.</p></div><figure class="media"><img src="img/session-18/07-prompt-controle-final-crm.jpg" alt="Le prompt impose un contrôle final du XLSX." loading="lazy"><figcaption>Le prompt impose un contrôle final du XLSX.</figcaption></figure></div></section>
+<section id="section-28" class="section tone-4 layout-prompt"><div class="wrap"><div class="section-copy"><p class="kicker">28 · Prompt qualité</p><h2>28. Contrôle du classeur CRM</h2><p>Ce prompt sert à auditer la sortie avant de considérer la base prête.</p></div><div class="prompt-card"><div class="prompt-head"><span>Prompt à copier</span><button class="copy-btn" type="button">Copier</button></div><pre><code>Contrôle le classeur CRM avant de finir :
+- MASTER_CRM est dédupliqué
+- READY_FOR_EMAIL contient seulement des emails exploitables
+- DO_NOT_CONTACT est exclu de OUTREACH_QUEUE
+- final_lead_score est entre 0 et 100
+- chaque ligne a final_next_action
+- les statuts qualité sont cohérents
+Donne-moi les chiffres clés et les fichiers créés.</code></pre></div></div></section>
+<section id="section-29" class="section tone-5 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">29 · Transformations</p><h2>29. Codex lance les transformations</h2><p>Le modèle lit les colonnes, normalise, fusionne, score et prépare les statuts.</p></div><figure class="media"><img src="img/session-18/15-codex-transformations-crm.jpg" alt="Codex lance les transformations : normalisation, union, score et statuts." loading="lazy"><figcaption>Codex lance les transformations : normalisation, union, score et statuts.</figcaption></figure></div></section>
+<section id="section-30" class="section tone-6 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">30 · Script</p><h2>30. Un script dédié est créé</h2><p>Codex génère un script de traitement plutôt qu&#x27;une modification improvisée dans le tableur.</p></div><figure class="media"><img src="img/session-18/16-creation-process-crm.jpg" alt="Le script de traitement CRM est créé." loading="lazy"><figcaption>Le script de traitement CRM est créé.</figcaption></figure></div></section>
+<section id="section-31" class="section tone-1 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">31 · Pourquoi un script</p><h2>31. Le script rend le traitement reproductible</h2><p>C&#x27;est plus fiable qu&#x27;un nettoyage manuel ligne par ligne.</p></div><div class="cards"><article><strong>Reprise</strong><p>On peut relancer.</p></article><article><strong>Audit</strong><p>On voit les règles.</p></article><article><strong>Volume</strong><p>11 839 lignes restent gérables.</p></article><article><strong>Sorties</strong><p>CSV, XLSX, rapports générés ensemble.</p></article></div></div></section>
+<section id="section-32" class="section tone-2 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">32 · Génération</p><h2>32. Les fichiers CRM sont générés</h2><p>Une fois la transformation faite, je vérifie les fichiers créés avant de passer à l&#x27;organisation du dossier.</p></div><figure class="media"><img src="img/session-18/17-codex-generation-fichiers-crm.jpg" alt="Les fichiers CRM sont générés et contrôlés." loading="lazy"><figcaption>Les fichiers CRM sont générés et contrôlés.</figcaption></figure></div></section>
+<section id="section-33" class="section tone-3 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">33 · Message final</p><h2>33. La première mission se termine</h2><p>Codex répond avec les fichiers et les chiffres clés demandés.</p></div><figure class="media"><img src="img/session-18/12-message-final-base-crm.jpg" alt="Codex termine la première base CRM nettoyée." loading="lazy"><figcaption>Codex termine la première base CRM nettoyée.</figcaption></figure></div></section>
+<section id="section-34" class="section tone-4 layout-full"><div class="wrap"><div class="section-copy"><p class="kicker">34 · Dashboard</p><h2>34. J&#x27;ouvre le dashboard dans Google Sheets</h2><p>Le dashboard donne les KPI : lignes source, leads dédupliqués, CLEAN_READY, warnings, review, exclusions, classes et canaux.</p></div><figure class="media full-media"><img src="img/session-18/21-dashboard-crm-google-sheets.jpg" alt="Le dashboard CRM donne les premiers KPI." loading="lazy"><figcaption>Le dashboard CRM donne les premiers KPI.</figcaption></figure></div></section>
+<section id="section-35" class="section tone-5 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">35 · KPI</p><h2>35. Les KPI importants à lire</h2><p>Je vérifie que les chiffres racontent quelque chose.</p></div><div class="table-wrap"><table><thead><tr><th>KPI</th><th>Pourquoi</th></tr></thead><tbody><tr><td>Lignes source</td><td>Volume de départ</td></tr><tr><td>Leads dédupliqués</td><td>Volume final réel</td></tr><tr><td>CLEAN_READY</td><td>Contactable proprement</td></tr><tr><td>READY_WITH_WARNING</td><td>Contactable avec prudence</td></tr><tr><td>DO_NOT_CONTACT</td><td>À exclure</td></tr><tr><td>Taux contactable</td><td>Valeur commerciale réelle</td></tr></tbody></table></div></div></section>
+<section id="section-36" class="section tone-6 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">36 · Master CRM</p><h2>36. MASTER_CRM garde la ligne complète</h2><p>Je retrouve les contacts, statuts, canaux, scores, segments et notes dans une seule vue.</p></div><figure class="media"><img src="img/session-18/22-master-crm-clean-ready.jpg" alt="MASTER_CRM montre les statuts et canaux recommandés." loading="lazy"><figcaption>MASTER_CRM montre les statuts et canaux recommandés.</figcaption></figure></div></section>
+<section id="section-37" class="section tone-1 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">37 · Vues d&#x27;action</p><h2>37. Les onglets doivent servir l&#x27;action</h2><p>Chaque vue réduit le bruit.</p></div><div class="cards"><article><strong>READY_FOR_EMAIL</strong><p>emails exploitables</p></article><article><strong>READY_FOR_CALL</strong><p>téléphones exploitables</p></article><article><strong>READY_FOR_SOCIAL</strong><p>profils sociaux</p></article><article><strong>MANUAL_REVIEW</strong><p>cas ambigus</p></article><article><strong>DO_NOT_CONTACT</strong><p>exclusions</p></article></div></div></section>
+<section id="section-38" class="section tone-2 layout-quote"><div class="wrap"><div class="section-copy"><p class="kicker">38 · Message</p><h2>38. Le message doit sortir de la donnée</h2><p>Je ne veux pas un email générique. Je veux un message qui comprend le restaurant.</p></div><blockquote>La base prépare le message, elle ne remplace pas la réflexion commerciale.</blockquote></div></section>
+<section id="section-39" class="section tone-3 layout-before"><div class="wrap"><div class="section-copy"><p class="kicker">39 · Mauvais message</p><h2>39. Le générique ne suffit pas</h2><p>Je veux un ton plus direct et plus humain.</p></div><div class="before-after"><div><span>Avant</span><p>Bonjour, j&#x27;espère que vous allez bien, je souhaite vous présenter mes services.</p></div><div><span>Après</span><p>Le resto tourne bien en ce moment. Je voulais te proposer un agent IA pour récupérer les appels et demandes qui se perdent quand l&#x27;équipe est sous l&#x27;eau.</p></div></div></div></section>
+<section id="section-40" class="section tone-4 layout-method"><div class="wrap"><div class="section-copy"><p class="kicker">40 · Personnalisation</p><h2>40. Les variables utiles au message</h2><p>La séance prépare les bases pour personnaliser sans inventer.</p></div><ol class="method"><li><span>01</span><p>Nom de l&#x27;entreprise.</p></li><li><span>02</span><p>Ville ou zone.</p></li><li><span>03</span><p>Avis Google ou volume.</p></li><li><span>04</span><p>Page contact ou privatisation.</p></li><li><span>05</span><p>Canal disponible.</p></li><li><span>06</span><p>Offre adaptée au segment.</p></li></ol></div></section>
+<section id="section-41" class="section tone-5 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">41 · Segments outreach</p><h2>41. Les segments deviennent des offres</h2><p>Chaque segment doit suggérer une promesse différente.</p></div><div class="table-wrap"><table><thead><tr><th>Segment</th><th>Angle</th></tr></thead><tbody><tr><td>privatisation_groupes</td><td>Assistant email groupes et événements</td></tr><tr><td>agent_vocal_appels</td><td>Agent vocal pour appels ratés</td></tr><tr><td>avis_reputation</td><td>Réponses et relance avis Google</td></tr><tr><td>reservation_no_show</td><td>Relance et no-show</td></tr><tr><td>recrutement_staffing</td><td>Assistant recrutement</td></tr><tr><td>crm_fidelisation</td><td>Mini CRM fidélisation</td></tr></tbody></table></div></div></section>
+<section id="section-42" class="section tone-6 layout-alert"><div class="wrap"><div class="section-copy"><p class="kicker">42 · Prudence</p><h2>42. Le score ne remplace pas le jugement</h2><p>Une classe A ne veut pas dire que le message est prêt à envoyer tel quel.</p></div><aside class="alert-box"><b>Point de vigilance</b><p>Le CRM prépare. La séance suivante automatise. Entre les deux, je garde une validation humaine.</p></aside></div></section>
+<section id="section-43" class="section tone-1 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">43 · Fichiers</p><h2>43. Le dossier contient maintenant beaucoup d&#x27;exports</h2><p>Après la première mission, le dossier est utile mais encore trop chargé pour la séance 19.</p></div><figure class="media"><img src="img/session-18/20-finder-bdd-prospection.jpg" alt="Le dossier BDD prospection contient les fichiers générés." loading="lazy"><figcaption>Le dossier BDD prospection contient les fichiers générés.</figcaption></figure></div></section>
+<section id="section-44" class="section tone-2 layout-image"><div class="wrap"><div class="section-stack"><div class="section-copy"><p class="kicker">44 · Problème</p><h2>44. Un bon fichier peut être perdu dans un mauvais dossier</h2><p>Je nettoie l&#x27;intérieur des fichiers, puis je nettoie l&#x27;organisation du projet.</p></div><div class="diagnostic"><div><b>Ce qui bloque</b><p>Plusieurs CSV/XLSX concurrents à la racine, anciennes versions et logs mélangés.</p></div><div><b>Comment je corrige</b><p>Créer un dossier final unique `PROSPECTION_READY` avec un seul XLSX opérationnel.</p></div></div></div><figure class="media"><img src="img/session-18/11-finder-dossier-leads.jpg" alt="Le dossier source contient plusieurs fichiers et sous-dossiers." loading="lazy"><figcaption>Le dossier source contient plusieurs fichiers et sous-dossiers.</figcaption></figure></div></section>
+<section id="section-45" class="section tone-3 layout-image"><div class="wrap"><div class="section-stack"><div class="section-copy"><p class="kicker">45 · Prompt complémentaire</p><h2>45. Je sélectionne le second prompt</h2><p>Le second prompt ne nettoie pas seulement la base : il audite tout le dossier et reconstruit une infrastructure propre.</p></div><figure class="media"><img src="img/session-18/18-selection-prompt-complementaire.jpg" alt="Je prépare le prompt complémentaire pour nettoyer le dossier." loading="lazy"><figcaption>Je prépare le prompt complémentaire pour nettoyer le dossier.</figcaption></figure></div><figure class="media"><img src="img/session-18/08-prompt-nettoyage-final-projet.jpg" alt="Le second prompt nettoie l&#x27;organisation globale du dossier." loading="lazy"><figcaption>Le second prompt nettoie l&#x27;organisation globale du dossier.</figcaption></figure></div></section>
+<section id="section-46" class="section tone-4 layout-prompt"><div class="wrap"><div class="section-copy"><p class="kicker">46 · Prompt nettoyage projet</p><h2>46. Le prompt complet pour ranger le projet</h2><p>Ce prompt analyse récursivement le dossier, choisit les sources utiles, archive le reste et crée `PROSPECTION_READY`.</p></div><div class="prompt-card"><div class="prompt-head"><span>Prompt à copier</span><button class="copy-btn" type="button">Copier</button></div><pre><code>Tu es un data ops senior, spécialiste rangement de projets, consolidation de fichiers de leads, nettoyage CRM et préparation de prospection automatisée prudente.
+
+MISSION
+Le dossier de génération de leads de l&#x27;élève est devenu trop lourd, désorganisé ou ambigu :
+@/Users/fort/Desktop/mon-business/06-leads-gratuits-massif
+
+Cette adresse est le dossier à nettoyer dans cet exemple. Si le projet de l&#x27;élève utilise un autre chemin, adapte-toi au chemin réel donné par l&#x27;utilisateur.
+
+Tu dois analyser tout le dossier, pas seulement un fichier.
+Tu dois reconstruire une infrastructure finale propre, logique et stratégique pour la suite.
+Le but n&#x27;est pas d&#x27;envoyer des messages.
+Le but est de garder une seule base Excel opérationnelle et de supprimer le chaos opérationnel.
+
+Le prompt doit rester généraliste :
+- ne suppose pas que les fichiers portent les mêmes noms que dans l&#x27;exemple
+- ne suppose pas que les colonnes ont les mêmes noms
+- ne suppose pas que les données utiles sont à la racine du dossier
+- ne suppose pas qu&#x27;un fichier récent est forcément le bon
+- décide à partir du contenu, de la structure, de la qualité et des doublons
+
+RÈGLE ABSOLUE
+Ne lance aucune prospection.
+Ne te connecte à aucun outil d&#x27;envoi.
+Ne supprime rien définitivement.
+Ne casse pas les fichiers sources.
+Ne modifie pas les fichiers sources originaux.
+Ne garde qu&#x27;un seul fichier XLSX opérationnel pour la suite.
+Tous les autres fichiers doivent être documentés, ignorés ou archivés.
+
+ENTRÉE
+Analyse récursivement tout le dossier :
+~/Desktop/mon-business/06-leads-gratuits-massif/
+
+Repère :
+- tous les fichiers à la racine
+- tous les fichiers dans les sous-dossiers
+- CSV, XLSX, XLS, JSON, TXT, MD, HTML si présents
+- exports bruts
+- fichiers enrichis
+- fichiers de mapping
+- fichiers de déduplication
+- bases finales candidates
+- versions intermédiaires
+- fichiers de test
+- fichiers temporaires
+- logs
+- scripts
+- notes de stratégie
+- doublons probables
+- dossiers utiles
+- dossiers inutiles
+- bases exploitables
+- bases à ignorer
+- fichiers déjà nettoyés
+
+Détecte les fichiers de leads par leur contenu, pas seulement par leur nom.
+Exemples d&#x27;indices :
+- présence d&#x27;entreprises
+- emails
+- téléphones
+- sites web
+- domaines
+- villes
+- adresses
+- URLs sources
+- profils sociaux
+- scores
+- colonnes CRM
+- lignes structurées répétées
+
+SORTIE OBLIGATOIRE
+Crée ou remets au propre un seul dossier final :
+~/Desktop/mon-business/09-bdd-prospection/PROSPECTION_READY/
+
+Structure finale attendue :
+- leads-prospection-ready.xlsx
+- README.md
+- rapport-nettoyage-projet.md
+- manifest-fichiers.csv
+- _archive_raw/
+- _archive_raw/used_sources/
+- _archive_raw/duplicate_or_old_versions/
+- _archive_raw/temp_logs_tests/
+- _archive_raw/manual_review_sources/
+- _archive_raw/non_lead_documents/
+
+Règle de structure :
+Le seul fichier XLSX opérationnel à la racine doit être :
+leads-prospection-ready.xlsx
+
+Si d&#x27;anciens XLSX doivent être conservés, ils vont dans _archive_raw/ et doivent être marqués comme archives.
+Aucun fichier dans _archive_raw/ ne doit être utilisé directement pour prospecter.
+La séance 19 doit lire uniquement :
+~/Desktop/mon-business/09-bdd-prospection/PROSPECTION_READY/leads-prospection-ready.xlsx
+
+PHASE 0 — AUDIT DU DOSSIER
+Analyse :
+- taille totale du dossier
+- nombre de fichiers
+- nombre de dossiers
+- nombre de CSV
+- nombre de XLSX
+- nombre d&#x27;autres fichiers exploitables
+- nombre de doublons probables
+- fichiers les plus lourds
+- fichiers qui ressemblent à des sources de leads
+- fichiers qui ressemblent à des résultats enrichis
+- fichiers probablement obsolètes ou intermédiaires
+- fichiers indispensables pour comprendre le projet
+- fichiers à archiver avec raison
+- risques du dossier actuel
+
+Écris le diagnostic dans rapport-nettoyage-projet.md.
+
+PHASE 1 — INVENTAIRE ET TRI
+Crée manifest-fichiers.csv avec :
+- path
+- file_name
+- extension
+- size_mb
+- last_modified
+- role_detected
+- keep_status
+- reason
+
+Valeurs keep_status :
+- keep_final
+- use_as_source
+- archive_used_source
+- archive_raw
+- archive_duplicate
+- archive_old_version
+- ignore_temp
+- ignore_non_lead
+- manual_review
+
+Valeurs role_detected possibles :
+- final_database_candidate
+- enriched_lead_source
+- raw_lead_source
+- dedupe_mapping
+- query_or_scraping_input
+- strategy_note
+- script_or_code
+- temp_file
+- log_file
+- duplicate
+- old_version
+- non_lead_document
+- unknown
+
+Règle :
+Ne travaille pas au hasard. Chaque fichier déplacé ou ignoré doit avoir une raison.
+Ne classe pas un fichier comme inutile simplement parce que son nom est bizarre.
+Lis sa structure ou un échantillon avant de décider.
+
+PHASE 2 — SÉLECTION STRATÉGIQUE DES SOURCES
+Avant de fusionner, choisis les sources à utiliser.
+
+Priorise les fichiers qui ont :
+- le plus de champs exploitables
+- des emails ou téléphones propres
+- des sources ou URLs
+- des données enrichies
+- une structure tabulaire claire
+- une date récente si plusieurs versions semblent identiques
+- moins de doublons
+
+Ne priorise pas automatiquement :
+- le plus gros fichier
+- le fichier le plus récent
+- le fichier appelé final
+- le fichier appelé massif
+
+Crée dans rapport-nettoyage-projet.md une section :
+&quot;Sources retenues pour consolidation&quot;
+avec :
+- fichier
+- raison
+- nombre de lignes estimé
+- colonnes principales
+- limites
+
+PHASE 3 — CONSOLIDATION DES DONNÉES
+Identifie les fichiers qui contiennent vraiment des leads.
+Fusionne seulement les données utiles.
+Déduplique les lignes.
+Normalise les colonnes.
+Garde les sources.
+Garde les meilleurs contacts.
+Exclus les lignes dangereuses ou non exploitables.
+
+Règles de lecture :
+- si un fichier est gros, lis-le par chunks ou échantillonne avant traitement complet
+- si un XLSX contient plusieurs onglets, inspecte tous les onglets
+- si les colonnes ne correspondent pas, crée un mapping intelligent
+- si une donnée est absente, laisse vide au lieu d&#x27;inventer
+- conserve toujours les sources dans source_files et source_urls
+
+Règles de déduplication :
+Déduplique progressivement avec :
+- domain
+- website normalisé
+- primary_email
+- primary_phone
+- company_name normalisé + city
+- source_url si disponible
+
+Quand deux lignes se ressemblent, fusionne les meilleurs champs :
+- email le plus exploitable
+- téléphone le plus exploitable
+- website le plus clair
+- source la plus précise
+- notes cumulées
+- meilleure classification qualité
+
+Le fichier final leads-prospection-ready.xlsx doit contenir :
+
+1. DASHBOARD
+Résumé lisible du fichier.
+
+2. MASTER_CRM
+Base finale dédupliquée et propre.
+
+3. READY_FOR_EMAIL
+Seulement les lignes avec email exploitable.
+
+4. READY_FOR_CALL
+Seulement les lignes avec téléphone exploitable.
+
+5. READY_FOR_SOCIAL
+Seulement les profils sociaux exploitables.
+
+6. OUTREACH_QUEUE
+File d&#x27;attente prête pour la prospection automatisée.
+
+7. DO_NOT_CONTACT
+Lignes exclues.
+
+8. MANUAL_REVIEW
+Lignes à vérifier.
+
+9. SOURCE_AUDIT
+Sources et fichiers utilisés.
+
+10. CLEANUP_LOG
+Résumé des choix de nettoyage.
+
+11. COLUMN_MAPPING
+Mapping entre colonnes sources et colonnes finales.
+
+Colonnes minimum dans MASTER_CRM :
+lead_id_final, company_name, website, domain, city, address, primary_email, all_emails, email_quality, primary_phone, all_phones, phone_quality, social_links, source_files, source_urls, final_class, quality_status, outreach_segment, final_next_action, campaign_status, opt_out_status, notes.
+
+Valeurs quality_status :
+- CLEAN_READY
+- READY_WITH_WARNING
+- NEEDS_MANUAL_REVIEW
+- DO_NOT_CONTACT
+
+Valeurs final_class :
+- A+
+- A
+- B
+- C
+- DO_NOT_CONTACT
+
+PHASE 4 — ORGANISATION DU DOSSIER FINAL
+Dans PROSPECTION_READY, garde une structure lisible :
+
+PROSPECTION_READY/
+- leads-prospection-ready.xlsx
+- README.md
+- rapport-nettoyage-projet.md
+- manifest-fichiers.csv
+_archive_raw/
+- used_sources/
+- duplicate_or_old_versions/
+- temp_logs_tests/
+- manual_review_sources/
+- non_lead_documents/
+
+Règle :
+- aucun autre XLSX opérationnel à la racine
+- aucun CSV opérationnel concurrent à la racine
+- les fichiers sources conservés vont dans _archive_raw/
+- les fichiers incertains vont dans manual_review_sources/
+- README.md doit dire clairement : &quot;Pour la séance 19, utiliser uniquement leads-prospection-ready.xlsx&quot;
+
+PHASE 5 — RÈGLES QUALITÉ
+Vérifie :
+- pas de doublons critiques dans MASTER_CRM
+- pas de ligne DO_NOT_CONTACT dans OUTREACH_QUEUE
+- pas de ligne sans source
+- pas de données inventées
+- pas de fichier final en plusieurs versions
+- pas de CSV opérationnel concurrent
+- pas de XLSX opérationnel concurrent
+- un seul fichier final pour la séance suivante
+- OUTREACH_QUEUE contient seulement des lignes actionnables ou à vérifier
+- READY_FOR_EMAIL contient seulement des emails exploitables
+- READY_FOR_CALL contient seulement des téléphones exploitables
+- MANUAL_REVIEW récupère les cas ambigus
+
+PHASE 6 — PRÉPARATION PROSPECTION AUTOMATISÉE
+OUTREACH_QUEUE doit être utilisable par la séance 19.
+Chaque ligne doit avoir :
+- lead_id_final
+- company_name
+- recommended_channel
+- email ou téléphone si disponible
+- outreach_segment
+- final_class
+- quality_status
+- final_next_action
+- campaign_status = draft ou pending_review
+- opt_out_status vide
+- notes
+
+Règle :
+Par défaut, rien n&#x27;est approved.
+Tout doit rester en brouillon ou pending_review.
+Aucun message ne doit être envoyé.
+Aucun outil d&#x27;envoi ne doit être connecté.
+
+PHASE 7 — README POUR LA SUITE
+README.md doit expliquer simplement :
+- ce que contient le dossier
+- quel fichier ouvrir
+- quel fichier utiliser pour la séance 19
+- pourquoi les archives ne doivent pas servir à prospecter
+- quels onglets utiliser
+- ce qui reste à vérifier manuellement
+- qu&#x27;aucune prospection n&#x27;a été lancée
+
+CONTRÔLE FINAL
+Avant de finir :
+- vérifie que leads-prospection-ready.xlsx existe
+- vérifie que c&#x27;est le seul XLSX opérationnel du dossier final
+- vérifie que le fichier s&#x27;ouvre
+- vérifie que les onglets attendus existent
+- vérifie que OUTREACH_QUEUE ne contient pas DO_NOT_CONTACT
+- vérifie que README.md explique quoi utiliser
+- vérifie que rapport-nettoyage-projet.md explique ce qui a été archivé ou ignoré
+- vérifie que manifest-fichiers.csv couvre tous les fichiers analysés
+- vérifie que la structure finale est claire
+- vérifie qu&#x27;aucun envoi n&#x27;a été lancé
+
+MESSAGE FINAL
+Réponds seulement :
+&quot;Projet leads nettoyé.
+Dossier final :
+- PROSPECTION_READY
+
+Fichier Excel opérationnel :
+- leads-prospection-ready.xlsx
+
+Fichiers analysés : X
+Fichiers archivés : Y
+Leads finaux : Z
+Prêts email : A
+Prêts appel : B
+À vérifier : C
+Exclus : D
+
+Mode : prêt pour prospection automatisée, mais aucun envoi lancé.&quot;</code></pre></div></div></section>
+<section id="section-47" class="section tone-5 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">47 · Inventaire</p><h2>47. Le prompt impose un inventaire</h2><p>Je ne veux pas que Codex décide au hasard. Chaque fichier doit avoir un rôle et une raison.</p></div><figure class="media"><img src="img/session-18/09-prompt-inventaire-dossier.jpg" alt="L&#x27;inventaire récursif évite de choisir un fichier au hasard." loading="lazy"><figcaption>L&#x27;inventaire récursif évite de choisir un fichier au hasard.</figcaption></figure></div></section>
+<section id="section-48" class="section tone-6 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">48 · Manifest</p><h2>48. `manifest-fichiers.csv` documente les choix</h2><p>Le manifest évite de perdre la trace des fichiers analysés.</p></div><div class="table-wrap"><table><thead><tr><th>Colonne</th><th>Usage</th></tr></thead><tbody><tr><td>path</td><td>Emplacement du fichier</td></tr><tr><td>role_detected</td><td>Rôle déduit</td></tr><tr><td>keep_status</td><td>Garder, archiver, ignorer</td></tr><tr><td>reason</td><td>Pourquoi cette décision</td></tr></tbody></table></div></div></section>
+<section id="section-49" class="section tone-1 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">49 · keep_status</p><h2>49. Les statuts de fichier sont explicites</h2><p>Rien n&#x27;est déplacé sans raison.</p></div><div class="cards"><article><strong>keep_final</strong><p>fichier final</p></article><article><strong>use_as_source</strong><p>source utile</p></article><article><strong>archive_duplicate</strong><p>doublon</p></article><article><strong>ignore_temp</strong><p>temporaire</p></article><article><strong>manual_review</strong><p>incertain</p></article></div></div></section>
+<section id="section-50" class="section tone-2 layout-image"><div class="wrap"><div class="section-stack"><div class="section-copy"><p class="kicker">50 · Question</p><h2>50. Je demande une organisation plus simple</h2><p>Le but est clair : un seul dossier final, avec des sous-dossiers utiles et pas de chaos opérationnel.</p></div><figure class="media"><img src="img/session-18/19-question-nettoyage-dossier.jpg" alt="Je demande une organisation plus claire du projet." loading="lazy"><figcaption>Je demande une organisation plus claire du projet.</figcaption></figure></div><figure class="media"><img src="img/session-18/23-prompt-nettoyage-dossier.jpg" alt="Le prompt de nettoyage dossier formalise la structure finale." loading="lazy"><figcaption>Le prompt de nettoyage dossier formalise la structure finale.</figcaption></figure></div></section>
+<section id="section-51" class="section tone-3 layout-prompt"><div class="wrap"><div class="section-copy"><p class="kicker">51 · Prompt organisation courte</p><h2>51. Version courte pour relancer l&#x27;organisation</h2><p>Quand je veux une correction simple, je peux donner une instruction directe.</p></div><div class="prompt-card"><div class="prompt-head"><span>Prompt à copier</span><button class="copy-btn" type="button">Copier</button></div><pre><code>Organise le dossier pour la suite.
+Je veux un seul dossier final clair :
+PROSPECTION_READY/
+
+Garde uniquement le fichier Excel opérationnel, les rapports, le manifest et les notes utiles.
+Archive ou ignore les anciens exports, logs, scripts, caches et fichiers temporaires.
+La séance 19 doit utiliser uniquement le fichier final.</code></pre></div></div></section>
+<section id="section-52" class="section tone-4 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">52 · Accès complet</p><h2>52. Codex a besoin de déplacer des fichiers</h2><p>Pour ranger le dossier, il doit pouvoir créer, déplacer et archiver. Je garde la règle : rien ne doit être supprimé définitivement.</p></div><figure class="media"><img src="img/session-18/24-autorisation-acces-complet.jpg" alt="Codex travaille avec accès complet pour déplacer et organiser les fichiers." loading="lazy"><figcaption>Codex travaille avec accès complet pour déplacer et organiser les fichiers.</figcaption></figure></div></section>
+<section id="section-53" class="section tone-5 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">53 · Script final</p><h2>53. Le script construit `PROSPECTION_READY`</h2><p>Codex prépare la structure, le manifest et le fichier final à partir des sources retenues.</p></div><figure class="media"><img src="img/session-18/25-terminal-script-prospection-ready.jpg" alt="Le script final construit la zone PROSPECTION_READY." loading="lazy"><figcaption>Le script final construit la zone PROSPECTION_READY.</figcaption></figure></div></section>
+<section id="section-54" class="section tone-6 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">54 · En cours</p><h2>54. Le nettoyage archive les couches inutiles</h2><p>Les anciens exports, logs, scripts et caches sortent du chemin opérationnel.</p></div><figure class="media"><img src="img/session-18/26-nettoyage-projet-en-cours.jpg" alt="Le nettoyage projet archive les exports concurrents." loading="lazy"><figcaption>Le nettoyage projet archive les exports concurrents.</figcaption></figure></div></section>
+<section id="section-55" class="section tone-1 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">55 · Structure</p><h2>55. La structure finale devient lisible</h2><p>Le dossier final se divise en sous-dossiers simples : à lire, base Excel, audit qualité et stratégie.</p></div><figure class="media"><img src="img/session-18/27-organisation-prospection-ready.jpg" alt="La structure PROSPECTION_READY devient lisible." loading="lazy"><figcaption>La structure PROSPECTION_READY devient lisible.</figcaption></figure></div></section>
+<section id="section-56" class="section tone-2 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">56 · PROSPECTION_READY</p><h2>56. La structure attendue</h2><p>La séance 19 ne doit pas chercher dans tout le projet.</p></div><div class="table-wrap"><table><thead><tr><th>Dossier</th><th>Rôle</th></tr></thead><tbody><tr><td>00-A-LIRE</td><td>README et instructions</td></tr><tr><td>01-BASE-EXCEL-A-UTILISER</td><td>fichier Excel opérationnel</td></tr><tr><td>02-AUDIT-QUALITE</td><td>rapports, manifest, anomalies</td></tr><tr><td>03-STRATEGIE</td><td>notes d&#x27;outreach et segments</td></tr></tbody></table></div></div></section>
+<section id="section-57" class="section tone-3 layout-image"><div class="wrap"><div class="section-stack"><div class="section-copy"><p class="kicker">57 · Rapport</p><h2>57. Le rapport explique les choix</h2><p>Je dois savoir ce qui a été conservé, archivé, ignoré et pourquoi.</p></div><figure class="media"><img src="img/session-18/28-rapport-et-controle-final.jpg" alt="Le rapport explique ce qui a été archivé ou conservé." loading="lazy"><figcaption>Le rapport explique ce qui a été archivé ou conservé.</figcaption></figure></div><figure class="media"><img src="img/session-18/10-prompt-final-readme-controle.jpg" alt="Le README doit dire quel fichier utiliser ensuite." loading="lazy"><figcaption>Le README doit dire quel fichier utiliser ensuite.</figcaption></figure></div></section>
+<section id="section-58" class="section tone-4 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">58 · Dossier sortie</p><h2>58. `09-bdd-prospection` devient la zone finale</h2><p>Les anciens fichiers ne doivent plus concurrencer le fichier opérationnel.</p></div><figure class="media"><img src="img/session-18/29-finder-09-bdd-prospection.jpg" alt="Le dossier 09-bdd-prospection devient la zone de sortie." loading="lazy"><figcaption>Le dossier 09-bdd-prospection devient la zone de sortie.</figcaption></figure></div></section>
+<section id="section-59" class="section tone-5 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">59 · Final</p><h2>59. Le dossier final prépare la séance 19</h2><p>La prochaine séance doit lire uniquement le fichier final, sans repartir dans les fichiers bruts.</p></div><figure class="media"><img src="img/session-18/30-prospection-ready-final.jpg" alt="Le dossier final prépare la séance 19." loading="lazy"><figcaption>Le dossier final prépare la séance 19.</figcaption></figure></div></section>
+<section id="section-60" class="section tone-6 layout-prompt"><div class="wrap"><div class="section-copy"><p class="kicker">60 · Contrôle final dossier</p><h2>60. Je contrôle `PROSPECTION_READY`</h2><p>Ce prompt sert à valider que le dossier est vraiment prêt pour la suite.</p></div><div class="prompt-card"><div class="prompt-head"><span>Prompt à copier</span><button class="copy-btn" type="button">Copier</button></div><pre><code>Contrôle final du dossier PROSPECTION_READY :
+- un seul XLSX opérationnel
+- README clair
+- manifest-fichiers.csv présent
+- rapport-nettoyage-projet.md présent
+- OUTREACH_QUEUE sans DO_NOT_CONTACT
+- aucun envoi lancé
+Réponds avec le chemin exact du fichier à utiliser pour la séance 19.</code></pre></div></div></section>
+<section id="section-61" class="section tone-1 layout-timeline"><div class="wrap"><div class="section-copy"><p class="kicker">61 · Histoire</p><h2>61. La séance suit deux chantiers</h2><p>Je nettoie d&#x27;abord la base, puis le dossier.</p></div><div class="timeline"><article><span>1</span><p>Je lance le prompt CRM.</p></article><article><span>2</span><p>Codex retrouve le fichier Apify.</p></article><article><span>3</span><p>Je contrôle le dashboard et MASTER_CRM.</p></article><article><span>4</span><p>Je constate que le dossier reste trop chargé.</p></article><article><span>5</span><p>Je lance le prompt de rangement.</p></article><article><span>6</span><p>Je prépare `PROSPECTION_READY`.</p></article></div></div></section>
+<section id="section-62" class="section tone-2 layout-diagnostic"><div class="wrap"><div class="section-copy"><p class="kicker">62 · Erreur</p><h2>62. Confondre nettoyage de données et rangement projet</h2><p>Ce sont deux problèmes différents.</p></div><div class="diagnostic"><div><b>Ce qui bloque</b><p>Avoir un bon Excel mais laisser cinq fichiers concurrents dans le même dossier.</p></div><div><b>Comment je corrige</b><p>Un fichier opérationnel unique + archives documentées.</p></div></div></div></section>
+<section id="section-63" class="section tone-3 layout-diagnostic"><div class="wrap"><div class="section-copy"><p class="kicker">63 · Erreur</p><h2>63. Envoyer trop tôt</h2><p>Une base avec `DO_NOT_CONTACT` dans la file d&#x27;attente est dangereuse.</p></div><div class="diagnostic"><div><b>Ce qui bloque</b><p>Tout passer dans l&#x27;outil de prospection parce que le fichier existe.</p></div><div><b>Comment je corrige</b><p>Contrôler `OUTREACH_QUEUE` et exclure `DO_NOT_CONTACT`.</p></div></div></div></section>
+<section id="section-64" class="section tone-4 layout-diagnostic"><div class="wrap"><div class="section-copy"><p class="kicker">64 · Erreur</p><h2>64. Garder le fichier le plus récent sans l&#x27;auditer</h2><p>Le plus récent n&#x27;est pas forcément le meilleur.</p></div><div class="diagnostic"><div><b>Ce qui bloque</b><p>Choisir `final.xlsx` juste parce que le nom rassure.</p></div><div><b>Comment je corrige</b><p>Lire les colonnes, onglets, volumes et sources avant de choisir.</p></div></div></div></section>
+<section id="section-65" class="section tone-5 layout-diagnostic"><div class="wrap"><div class="section-copy"><p class="kicker">65 · Erreur</p><h2>65. Inventer les données manquantes</h2><p>Le CRM doit rester fiable.</p></div><div class="diagnostic"><div><b>Ce qui bloque</b><p>Remplir un email, un téléphone ou un statut sans source.</p></div><div><b>Comment je corrige</b><p>Laisser vide, flagger, ou classer en `ENRICH_LATER`.</p></div></div></div></section>
+<section id="section-66" class="section tone-6 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">66 · Décision</p><h2>66. Que faire selon la qualité</h2><p>Chaque statut a une suite logique.</p></div><div class="table-wrap"><table><thead><tr><th>Statut</th><th>Suite</th></tr></thead><tbody><tr><td>CLEAN_READY</td><td>Peut aller en brouillon d&#x27;outreach</td></tr><tr><td>READY_WITH_WARNING</td><td>Peut être testé en faible volume</td></tr><tr><td>NEEDS_MANUAL_REVIEW</td><td>Relecture humaine</td></tr><tr><td>ENRICH_LATER</td><td>Relance enrichissement</td></tr><tr><td>DO_NOT_CONTACT</td><td>Exclusion</td></tr></tbody></table></div></div></section>
+<section id="section-67" class="section tone-1 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">67 · Ce que je veux livrer</p><h2>67. Les livrables de séance</h2><p>À la fin, je veux un système compréhensible.</p></div><div class="cards"><article><strong>Excel final</strong><p>La base utilisable.</p></article><article><strong>README</strong><p>Le mode d&#x27;emploi.</p></article><article><strong>Manifest</strong><p>L&#x27;audit des fichiers.</p></article><article><strong>Rapport</strong><p>Les choix de nettoyage.</p></article><article><strong>Segments</strong><p>La stratégie de message.</p></article></div></div></section>
+<section id="section-68" class="section tone-2 layout-quote"><div class="wrap"><div class="section-copy"><p class="kicker">68 · Méthode</p><h2>68. La méthode IA derrière la séance</h2><p>Le plus important n&#x27;est pas le tableur, c&#x27;est la façon de cadrer le travail.</p></div><blockquote>Je donne une mission, je force les contraintes, je contrôle la sortie, puis je corrige l&#x27;organisation.</blockquote></div></section>
+<section id="section-69" class="section tone-3 layout-method"><div class="wrap"><div class="section-copy"><p class="kicker">69 · Refaire</p><h2>69. Pour refaire avec ton secteur</h2><p>Tu peux adapter la séance à n&#x27;importe quelle base B2B.</p></div><ol class="method"><li><span>01</span><p>Remplacer les services proposés.</p></li><li><span>02</span><p>Adapter les segments d&#x27;outreach.</p></li><li><span>03</span><p>Adapter les règles de fit.</p></li><li><span>04</span><p>Conserver les statuts qualité.</p></li><li><span>05</span><p>Garder un fichier opérationnel unique.</p></li></ol></div></section>
+<section id="section-70" class="section tone-4 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">70 · Variables</p><h2>70. Les variables à changer</h2><p>Le prompt n&#x27;est pas figé.</p></div><div class="table-wrap"><table><thead><tr><th>Variable</th><th>À adapter</th></tr></thead><tbody><tr><td>Secteur</td><td>restaurants, artisans, cabinets, SaaS, santé...</td></tr><tr><td>Offres</td><td>agent vocal, audit, CRM, chatbot, reporting...</td></tr><tr><td>Signaux douleur</td><td>avis, recrutement, délai, volume, conformité...</td></tr><tr><td>Canaux</td><td>email, appel, LinkedIn, formulaire</td></tr><tr><td>Classes</td><td>seuils selon ton niveau de risque</td></tr></tbody></table></div></div></section>
+<section id="section-71" class="section tone-5 layout-check"><div class="wrap"><div class="section-copy"><p class="kicker">71 · Checklist CRM</p><h2>71. Checklist du fichier CRM</h2><p>Avant de passer à la séance 19, je vérifie ces points.</p></div><ul class="checklist"><li><span>01</span><p>MASTER_CRM est dédupliqué.</p></li><li><span>02</span><p>READY_FOR_EMAIL contient seulement des emails.</p></li><li><span>03</span><p>READY_FOR_CALL contient seulement des téléphones.</p></li><li><span>04</span><p>OUTREACH_QUEUE ne contient pas DO_NOT_CONTACT.</p></li><li><span>05</span><p>Chaque ligne a une action finale.</p></li></ul></div></section>
+<section id="section-72" class="section tone-6 layout-check"><div class="wrap"><div class="section-copy"><p class="kicker">72 · Checklist dossier</p><h2>72. Checklist du dossier final</h2><p>Le dossier doit être clair pour quelqu&#x27;un qui reprend le projet.</p></div><ul class="checklist"><li><span>01</span><p>Un seul XLSX opérationnel.</p></li><li><span>02</span><p>README présent.</p></li><li><span>03</span><p>Manifest présent.</p></li><li><span>04</span><p>Rapport présent.</p></li><li><span>05</span><p>Archives séparées.</p></li><li><span>06</span><p>Aucune prospection lancée.</p></li></ul></div></section>
+<section id="section-73" class="section tone-1 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">73 · Pourquoi ça compte</p><h2>73. Une base propre protège la délivrabilité</h2><p>Même avant l&#x27;outil d&#x27;envoi, la qualité de la base compte.</p></div><div class="cards"><article><strong>Moins de bounce</strong><p>emails nettoyés</p></article><article><strong>Moins de bruit</strong><p>doublons retirés</p></article><article><strong>Meilleurs messages</strong><p>segments clairs</p></article><article><strong>Meilleur pilotage</strong><p>dashboard et statuts</p></article></div></div></section>
+<section id="section-74" class="section tone-2 layout-quote"><div class="wrap"><div class="section-copy"><p class="kicker">74 · À retenir</p><h2>74. La base est un système de décision</h2><p>Le tableur n&#x27;est pas une archive. C&#x27;est un outil opérationnel.</p></div><blockquote>Une ligne doit dire : je contacte, je vérifie, j&#x27;enrichis ou j&#x27;exclus.</blockquote></div></section>
+<section id="section-75" class="section tone-3 layout-flow"><div class="wrap"><div class="section-copy"><p class="kicker">75 · Vers séance 19</p><h2>75. La sortie alimente la prospection automatisée</h2><p>La séance suivante utilise le fichier final comme source unique.</p></div><div class="flow"><span>PROSPECTION_READY</span><span>leads-prospection-ready.xlsx</span><span>OUTREACH_QUEUE</span><span>messages</span><span>outil d&#x27;envoi</span><span>suivi</span></div></div></section>
+<section id="section-76" class="section tone-4 layout-alert"><div class="wrap"><div class="section-copy"><p class="kicker">76 · Conformité</p><h2>76. Rien n&#x27;est envoyé sans validation</h2><p>Le CRM prépare des brouillons. Les envois viennent seulement après vérification.</p></div><aside class="alert-box"><b>Point de vigilance</b><p>Aucun outil d&#x27;envoi ne doit être connecté pendant cette séance.</p></aside></div></section>
+<section id="section-77" class="section tone-5 layout-method"><div class="wrap"><div class="section-copy"><p class="kicker">77 · Mini méthode client</p><h2>77. Transformer une demande client en pipeline</h2><p>La séance sert aussi de modèle pour d&#x27;autres missions IA.</p></div><ol class="method"><li><span>01</span><p>Comprendre l&#x27;objectif business.</p></li><li><span>02</span><p>Lister les données disponibles.</p></li><li><span>03</span><p>Définir les statuts et actions.</p></li><li><span>04</span><p>Créer le prompt opérable.</p></li><li><span>05</span><p>Faire exécuter par Codex.</p></li><li><span>06</span><p>Contrôler et documenter.</p></li></ol></div></section>
+<section id="section-78" class="section tone-6 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">78 · Indicateurs finaux</p><h2>78. Les chiffres à annoncer</h2><p>Le message final doit être quantifié.</p></div><div class="cards"><article><strong>Lignes source</strong><p>volume de départ</p></article><article><strong>Leads finaux</strong><p>après déduplication</p></article><article><strong>Doublons fusionnés</strong><p>gain qualité</p></article><article><strong>Prêts email</strong><p>canal prioritaire</p></article><article><strong>À vérifier</strong><p>travail humain restant</p></article></div></div></section>
+<section id="section-79" class="section tone-1 layout-before"><div class="wrap"><div class="section-copy"><p class="kicker">79 · Ce qui change</p><h2>79. Le dossier passe de projet brouillon à outil de travail</h2><p>C&#x27;est exactement ce que doit faire une formation actionnable.</p></div><div class="before-after"><div><span>Avant</span><p>Des fichiers bruts, scripts, logs, exports et notes mélangés.</p></div><div><span>Après</span><p>Un dossier `PROSPECTION_READY` avec une seule base officielle pour la suite.</p></div></div></div></section>
+<section id="section-80" class="section tone-2 layout-final"><div class="wrap"><div class="section-copy"><p class="kicker">80 · Récap</p><h2>80. Ce que tu dois avoir à la fin</h2><p>La séance est terminée quand la base et le dossier sont prêts pour la prospection, sans envoi lancé.</p></div><div class="final-card"><ul><li>`leads-clean-crm.xlsx` ou `leads-prospection-ready.xlsx` selon l&#x27;étape.</li><li>`MASTER_CRM` dédupliqué.</li><li>`OUTREACH_QUEUE` propre.</li><li>`DO_NOT_CONTACT` exclu.</li><li>`README.md` qui indique le bon fichier.</li><li>`manifest-fichiers.csv` qui documente les choix.</li></ul></div></div></section></main>
+<footer class="footer"><p>DENEM Academy · Séance 18 · Transcription disponible dans <a href="transcription/seance-18-nettoyer-scorer-bdd-transcription.md">le dossier transcription</a>.</p></footer>
+<script>
+const progress=document.getElementById('progress');function updateProgress(){const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;progress.style.width=(max?window.scrollY/max*100:0)+'%'}document.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
+document.querySelectorAll('.copy-btn').forEach(btn=>{btn.addEventListener('click',async()=>{const code=btn.closest('.prompt-card').querySelector('code').innerText;await navigator.clipboard.writeText(code);const old=btn.innerText;btn.innerText='Copié';setTimeout(()=>btn.innerText=old,1200)})});
+</script>
+</body>
+</html>
