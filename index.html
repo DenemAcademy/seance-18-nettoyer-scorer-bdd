@@ -14,7 +14,15 @@
 <nav class="topbar"><div class="topbar-inner"><div class="brand"><img src="logo-denem.jpeg" alt="DENEM Academy"><span>DENEM Academy · Séance 18</span></div><span class="pill">CRM propre</span></div></nav>
 <header class="hero"><div class="hero-wrap"><div><p class="eyebrow">Acte 2 · Base de prospection</p><h1>Nettoyer, scorer et <span>préparer la BDD</span></h1><p>Je transforme la base enrichie avec Apify en CRM exploitable : déduplication, qualité, score final, segments d'outreach et dossier `PROSPECTION_READY` pour la séance 19.</p><div class="stats"><div class="stat"><b>80</b><small>sections guidées</small></div><div class="stat"><b>30</b><small>captures vidéo</small></div><div class="stat"><b>6</b><small>prompts copiables</small></div></div></div><figure class="media"><img src="img/session-18/01-intro-nettoyer-scorer-bdd.jpg" alt="Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD." loading="lazy"><figcaption>Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD.</figcaption></figure></div></header>
 <div class="toc"><a href="#section-01"><span>Acte 01</span><b>Pourquoi nettoyer</b></a><a href="#section-11"><span>Acte 02</span><b>Lancer Codex</b></a><a href="#section-16"><span>Acte 03</span><b>Prompt CRM</b></a><a href="#section-34"><span>Acte 04</span><b>Contrôler le classeur</b></a><a href="#section-45"><span>Acte 05</span><b>Ranger le projet</b></a><a href="#section-61"><span>Acte 06</span><b>Préparer la suite</b></a></div>
-<main><section id="section-01" class="section tone-1 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">01 · Vision</p><h2>01. Je passe d&#x27;une base enrichie à une base exploitable</h2><p>Je ne veux pas envoyer des messages tout de suite. Je veux une base propre, dédupliquée, scorée et prête pour la séance de prospection.</p></div><figure class="media"><img src="img/session-18/01-intro-nettoyer-scorer-bdd.jpg" alt="Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD." loading="lazy"><figcaption>Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD.</figcaption></figure></div></section>
+<main><section id="section-01" class="section tone-1 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">01 · Vision</p><h2>01. Je passe d&#x27;une base enrichie à une base exploitable</h2><p>Je ne veux pas envoyer des messages tout de suite. Je veux une base propre, dédupliquée, scorée et prête pour la séance de prospection.</p></div><figure class="media"><img src="img/session-18/01-intro-nettoyer-scorer-bdd.jpg" alt="Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD." loading="lazy"><figcaption>Je pose l&#x27;objectif : nettoyer, scorer et préparer la BDD.</figcaption></figure></div>
+<div class="denem-inline-docs">
+  <strong>Documentation utile</strong>
+  <a href="https://pandas.pydata.org/docs/" target="_blank" rel="noopener">
+    <span>pandas</span>
+    <small>Nettoyage, deduplication et transformation.</small>
+  </a>
+</div>
+</section>
 <section id="section-02" class="section tone-2 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">02 · Objectif</p><h2>02. La séance 18 est un sas qualité</h2><p>Les données collectées avant sont utiles, mais elles doivent devenir actionnables.</p></div><div class="cards"><article><strong>Nettoyer</strong><p>Corriger emails, téléphones, domaines et sources.</p></article><article><strong>Scorer</strong><p>Créer une priorité finale sur 100.</p></article><article><strong>Segmenter</strong><p>Préparer le bon message pour le bon type de restaurant.</p></article></div></div></section>
 <section id="section-03" class="section tone-3 layout-before"><div class="wrap"><div class="section-copy"><p class="kicker">03 · Avant / après</p><h2>03. Une base riche peut rester inutilisable</h2><p>Si je ne trie pas, j&#x27;envoie aux mauvais leads ou je mélange les canaux.</p></div><div class="before-after"><div><span>Avant</span><p>11 839 lignes enrichies, plusieurs onglets, doublons, contacts incomplets.</p></div><div><span>Après</span><p>CRM propre avec statuts qualité, classes finales et file d&#x27;attente d&#x27;outreach.</p></div></div></div></section>
 <section id="section-04" class="section tone-4 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">04 · Champs</p><h2>04. Les champs doivent servir l&#x27;outreach</h2><p>Un email, un téléphone ou un domaine ne vaut rien s&#x27;il n&#x27;est pas propre, sourcé et relié à une action.</p></div><figure class="media"><img src="img/session-18/02-champs-utilisables-outreach.jpg" alt="Les champs doivent devenir utilisables par un outil d&#x27;outreach." loading="lazy"><figcaption>Les champs doivent devenir utilisables par un outil d&#x27;outreach.</figcaption></figure></div></section>
@@ -397,7 +405,15 @@ Prêts appel : F&quot;</code></pre></div></div></section>
 <section id="section-24" class="section tone-6 layout-diagnostic"><div class="wrap"><div class="section-copy"><p class="kicker">24 · Erreur fréquente</p><h2>24. Supprimer une ligne peut supprimer une source</h2><p>La déduplication ne doit pas appauvrir la base.</p></div><div class="diagnostic"><div><b>Ce qui bloque</b><p>Garder une ligne au hasard parce que deux noms se ressemblent.</p></div><div><b>Comment je corrige</b><p>Fusionner les meilleurs champs et écrire la raison dans `dedupe-map.csv`.</p></div></div></div></section>
 <section id="section-25" class="section tone-1 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">25 · Quality flags</p><h2>25. Les flags expliquent le statut</h2><p>Je veux savoir pourquoi une ligne est prête ou bloquée.</p></div><div class="cards"><article><strong>missing_email</strong><p>Email absent.</p></article><article><strong>missing_phone</strong><p>Téléphone absent.</p></article><article><strong>weak_data_gouv_match</strong><p>Matching légal trop faible.</p></article><article><strong>conflicting_email</strong><p>Emails contradictoires.</p></article><article><strong>manual_review_required</strong><p>Décision humaine requise.</p></article></div></div></section>
 <section id="section-26" class="section tone-2 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">26 · Score final</p><h2>26. Le score final combine les séances précédentes</h2><p>Le CRM agrège la confiance légale, le contact et le potentiel commercial.</p></div><div class="table-wrap"><table><thead><tr><th>Bloc</th><th>Max</th><th>Signal</th></tr></thead><tbody><tr><td>legal_confidence_score</td><td>20</td><td>SIRET, entreprise active, APE, match</td></tr><tr><td>contactability_score</td><td>25</td><td>email, phone, source, conflit</td></tr><tr><td>fit_score_final</td><td>20</td><td>segment, ville, taille, catégorie</td></tr><tr><td>pain_score_final</td><td>20</td><td>avis, pain signals, angle</td></tr><tr><td>timing_score_final</td><td>15</td><td>actualité, recrutement, urgence</td></tr></tbody></table></div></div></section>
-<section id="section-27" class="section tone-3 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">27 · Contrôle</p><h2>27. Le prompt impose une vérification finale</h2><p>Je ne veux pas découvrir après coup que `READY_FOR_EMAIL` contient des lignes sans email.</p></div><figure class="media"><img src="img/session-18/07-prompt-controle-final-crm.jpg" alt="Le prompt impose un contrôle final du XLSX." loading="lazy"><figcaption>Le prompt impose un contrôle final du XLSX.</figcaption></figure></div></section>
+<section id="section-27" class="section tone-3 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">27 · Contrôle</p><h2>27. Le prompt impose une vérification finale</h2><p>Je ne veux pas découvrir après coup que `READY_FOR_EMAIL` contient des lignes sans email.</p></div><figure class="media"><img src="img/session-18/07-prompt-controle-final-crm.jpg" alt="Le prompt impose un contrôle final du XLSX." loading="lazy"><figcaption>Le prompt impose un contrôle final du XLSX.</figcaption></figure></div>
+<div class="denem-inline-docs">
+  <strong>Documentation utile</strong>
+  <a href="https://openpyxl.readthedocs.io/en/stable/" target="_blank" rel="noopener">
+    <span>openpyxl</span>
+    <small>Creer et modifier des fichiers Excel.</small>
+  </a>
+</div>
+</section>
 <section id="section-28" class="section tone-4 layout-prompt"><div class="wrap"><div class="section-copy"><p class="kicker">28 · Prompt qualité</p><h2>28. Contrôle du classeur CRM</h2><p>Ce prompt sert à auditer la sortie avant de considérer la base prête.</p></div><div class="prompt-card"><div class="prompt-head"><span>Prompt à copier</span><button class="copy-btn" type="button">Copier</button></div><pre><code>Contrôle le classeur CRM avant de finir :
 - MASTER_CRM est dédupliqué
 - READY_FOR_EMAIL contient seulement des emails exploitables
@@ -802,7 +818,15 @@ Archive ou ignore les anciens exports, logs, scripts, caches et fichiers tempora
 La séance 19 doit utiliser uniquement le fichier final.</code></pre></div></div></section>
 <section id="section-52" class="section tone-4 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">52 · Accès complet</p><h2>52. Codex a besoin de déplacer des fichiers</h2><p>Pour ranger le dossier, il doit pouvoir créer, déplacer et archiver. Je garde la règle : rien ne doit être supprimé définitivement.</p></div><figure class="media"><img src="img/session-18/24-autorisation-acces-complet.jpg" alt="Codex travaille avec accès complet pour déplacer et organiser les fichiers." loading="lazy"><figcaption>Codex travaille avec accès complet pour déplacer et organiser les fichiers.</figcaption></figure></div></section>
 <section id="section-53" class="section tone-5 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">53 · Script final</p><h2>53. Le script construit `PROSPECTION_READY`</h2><p>Codex prépare la structure, le manifest et le fichier final à partir des sources retenues.</p></div><figure class="media"><img src="img/session-18/25-terminal-script-prospection-ready.jpg" alt="Le script final construit la zone PROSPECTION_READY." loading="lazy"><figcaption>Le script final construit la zone PROSPECTION_READY.</figcaption></figure></div></section>
-<section id="section-54" class="section tone-6 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">54 · En cours</p><h2>54. Le nettoyage archive les couches inutiles</h2><p>Les anciens exports, logs, scripts et caches sortent du chemin opérationnel.</p></div><figure class="media"><img src="img/session-18/26-nettoyage-projet-en-cours.jpg" alt="Le nettoyage projet archive les exports concurrents." loading="lazy"><figcaption>Le nettoyage projet archive les exports concurrents.</figcaption></figure></div></section>
+<section id="section-54" class="section tone-6 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">54 · En cours</p><h2>54. Le nettoyage archive les couches inutiles</h2><p>Les anciens exports, logs, scripts et caches sortent du chemin opérationnel.</p></div><figure class="media"><img src="img/session-18/26-nettoyage-projet-en-cours.jpg" alt="Le nettoyage projet archive les exports concurrents." loading="lazy"><figcaption>Le nettoyage projet archive les exports concurrents.</figcaption></figure></div>
+<div class="denem-inline-docs">
+  <strong>Documentation utile</strong>
+  <a href="https://scikit-learn.org/stable/modules/model_evaluation.html" target="_blank" rel="noopener">
+    <span>scikit-learn metrics</span>
+    <small>Evaluer une logique de scoring si besoin.</small>
+  </a>
+</div>
+</section>
 <section id="section-55" class="section tone-1 layout-image"><div class="wrap"><div class="section-copy"><p class="kicker">55 · Structure</p><h2>55. La structure finale devient lisible</h2><p>Le dossier final se divise en sous-dossiers simples : à lire, base Excel, audit qualité et stratégie.</p></div><figure class="media"><img src="img/session-18/27-organisation-prospection-ready.jpg" alt="La structure PROSPECTION_READY devient lisible." loading="lazy"><figcaption>La structure PROSPECTION_READY devient lisible.</figcaption></figure></div></section>
 <section id="section-56" class="section tone-2 layout-table"><div class="wrap"><div class="section-copy"><p class="kicker">56 · PROSPECTION_READY</p><h2>56. La structure attendue</h2><p>La séance 19 ne doit pas chercher dans tout le projet.</p></div><div class="table-wrap"><table><thead><tr><th>Dossier</th><th>Rôle</th></tr></thead><tbody><tr><td>00-A-LIRE</td><td>README et instructions</td></tr><tr><td>01-BASE-EXCEL-A-UTILISER</td><td>fichier Excel opérationnel</td></tr><tr><td>02-AUDIT-QUALITE</td><td>rapports, manifest, anomalies</td></tr><tr><td>03-STRATEGIE</td><td>notes d&#x27;outreach et segments</td></tr></tbody></table></div></div></section>
 <section id="section-57" class="section tone-3 layout-image"><div class="wrap"><div class="section-stack"><div class="section-copy"><p class="kicker">57 · Rapport</p><h2>57. Le rapport explique les choix</h2><p>Je dois savoir ce qui a été conservé, archivé, ignoré et pourquoi.</p></div><figure class="media"><img src="img/session-18/28-rapport-et-controle-final.jpg" alt="Le rapport explique ce qui a été archivé ou conservé." loading="lazy"><figcaption>Le rapport explique ce qui a été archivé ou conservé.</figcaption></figure></div><figure class="media"><img src="img/session-18/10-prompt-final-readme-controle.jpg" alt="Le README doit dire quel fichier utiliser ensuite." loading="lazy"><figcaption>Le README doit dire quel fichier utiliser ensuite.</figcaption></figure></div></section>
@@ -836,6 +860,122 @@ Réponds avec le chemin exact du fichier à utiliser pour la séance 19.</code><
 <section id="section-78" class="section tone-6 layout-cards"><div class="wrap"><div class="section-copy"><p class="kicker">78 · Indicateurs finaux</p><h2>78. Les chiffres à annoncer</h2><p>Le message final doit être quantifié.</p></div><div class="cards"><article><strong>Lignes source</strong><p>volume de départ</p></article><article><strong>Leads finaux</strong><p>après déduplication</p></article><article><strong>Doublons fusionnés</strong><p>gain qualité</p></article><article><strong>Prêts email</strong><p>canal prioritaire</p></article><article><strong>À vérifier</strong><p>travail humain restant</p></article></div></div></section>
 <section id="section-79" class="section tone-1 layout-before"><div class="wrap"><div class="section-copy"><p class="kicker">79 · Ce qui change</p><h2>79. Le dossier passe de projet brouillon à outil de travail</h2><p>C&#x27;est exactement ce que doit faire une formation actionnable.</p></div><div class="before-after"><div><span>Avant</span><p>Des fichiers bruts, scripts, logs, exports et notes mélangés.</p></div><div><span>Après</span><p>Un dossier `PROSPECTION_READY` avec une seule base officielle pour la suite.</p></div></div></div></section>
 <section id="section-80" class="section tone-2 layout-final"><div class="wrap"><div class="section-copy"><p class="kicker">80 · Récap</p><h2>80. Ce que tu dois avoir à la fin</h2><p>La séance est terminée quand la base et le dossier sont prêts pour la prospection, sans envoi lancé.</p></div><div class="final-card"><ul><li>`leads-clean-crm.xlsx` ou `leads-prospection-ready.xlsx` selon l&#x27;étape.</li><li>`MASTER_CRM` dédupliqué.</li><li>`OUTREACH_QUEUE` propre.</li><li>`DO_NOT_CONTACT` exclu.</li><li>`README.md` qui indique le bon fichier.</li><li>`manifest-fichiers.csv` qui documente les choix.</li></ul></div></div></section></main>
+
+<!-- DENEM documentation enrichment -->
+<style id="denem-docs-style">
+.denem-docs-section {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 72px 18px;
+  background: #fff;
+  color: var(--denem-ink, #111827);
+  border-bottom: 2px solid var(--denem-ink, #111827);
+}
+.denem-docs-wrap {
+  border: 2px solid var(--denem-ink, #111827);
+  box-shadow: var(--denem-shadow, 5px 5px 0 #111827);
+  padding: 26px;
+  background: #fff;
+}
+.denem-docs-kicker,
+.denem-inline-docs strong {
+  display: inline-flex;
+  border: 2px solid var(--denem-ink, #111827);
+  box-shadow: var(--denem-shadow-sm, 3px 3px 0 #111827);
+  background: var(--denem-accent, #2563eb);
+  color: #fff;
+  padding: 6px 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+.denem-docs-section h2 {
+  margin: 18px 0 10px;
+  font-size: clamp(32px, 4vw, 54px);
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+.denem-docs-section p {
+  max-width: 760px;
+  color: #334155;
+  line-height: 1.75;
+  font-size: 18px;
+}
+.denem-docs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.denem-doc-card,
+.denem-inline-docs a {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 2px solid var(--denem-ink, #111827);
+  box-shadow: var(--denem-shadow-sm, 3px 3px 0 #111827);
+  padding: 16px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+}
+.denem-doc-card span,
+.denem-inline-docs a span {
+  font-weight: 900;
+  color: var(--denem-accent, #2563eb);
+}
+.denem-doc-card small,
+.denem-inline-docs a small {
+  color: #475569;
+  line-height: 1.5;
+  font-size: 13px;
+}
+.denem-inline-docs {
+  margin-top: 22px;
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+}
+@media (max-width: 900px) {
+  .denem-docs-grid { grid-template-columns: 1fr; }
+  .denem-docs-section { padding: 52px 16px; }
+  .denem-docs-wrap { padding: 18px; }
+}
+</style>
+<section id="documentation" class="denem-docs-section" aria-label="Documentation externe">
+  <div class="denem-docs-wrap">
+    <div class="denem-docs-kicker">Documentation</div>
+    <h2>Documentation</h2>
+    <p>Liens externes utiles pour refaire la methode, verifier un outil et aller plus loin sans chercher au hasard.</p>
+    <div class="denem-docs-grid">
+      <a class="denem-doc-card" href="https://pandas.pydata.org/docs/" target="_blank" rel="noopener">
+        <span>pandas</span>
+        <small>Nettoyage, deduplication et transformation.</small>
+      </a>
+      <a class="denem-doc-card" href="https://openpyxl.readthedocs.io/en/stable/" target="_blank" rel="noopener">
+        <span>openpyxl</span>
+        <small>Creer et modifier des fichiers Excel.</small>
+      </a>
+      <a class="denem-doc-card" href="https://scikit-learn.org/stable/modules/model_evaluation.html" target="_blank" rel="noopener">
+        <span>scikit-learn metrics</span>
+        <small>Evaluer une logique de scoring si besoin.</small>
+      </a>
+      <a class="denem-doc-card" href="https://docs.python.org/3/library/csv.html" target="_blank" rel="noopener">
+        <span>Python CSV</span>
+        <small>Relire les exports CSV proprement.</small>
+      </a>
+      <a class="denem-doc-card" href="https://www.cnil.fr/fr/la-prospection-commerciale-par-courrier-electronique" target="_blank" rel="noopener">
+        <span>CNIL prospection</span>
+        <small>Ne garder que les donnees utiles et justifiables.</small>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- /DENEM documentation enrichment -->
+
 <footer class="footer"><p>DENEM Academy · Séance 18 · Transcription disponible dans <a href="transcription/seance-18-nettoyer-scorer-bdd-transcription.md">le dossier transcription</a>.</p></footer>
 <script>
 const progress=document.getElementById('progress');function updateProgress(){const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;progress.style.width=(max?window.scrollY/max*100:0)+'%'}document.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
